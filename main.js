@@ -83,7 +83,8 @@ ipcMain.on('close-tab', (event, tabId) => {
 ipcMain.on('search-tabs', (event, query) => {
   pythonProcess.send(JSON.stringify({
     type: 'search',
-    query: query
+    query: query,
+    threshold: 0.5  // Default threshold
   }));
 });
 
@@ -94,4 +95,10 @@ ipcMain.on('update-tab', (event, tabData) => {
     type: 'update_tab',
     ...tabData
   }));
+});
+
+// Add IPC handler for updating settings
+ipcMain.on('update-settings', (event, settings) => {
+  console.log('[Main] Forwarding settings update to Python:', settings);
+  pythonProcess.send(JSON.stringify(settings));
 }); 
