@@ -741,10 +741,11 @@
         <button id="close-cookie-modal" style="margin-top:16px;">Close</button>
     </div>
 
-    <div id="history-modal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#222c37; color:#fff; border-radius:8px; box-shadow:0 4px 16px #0003; z-index:9999; padding:24px; min-width:500px; max-height:70vh;">
+    <div id="history-modal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#222c37; color:#fff; border-radius:8px; box-shadow:0 4px 16px #0003; z-index:9999; padding:24px; min-width:400px; max-width:520px; max-height:70vh;">
         <div style="font-weight:bold; font-size:18px; margin-bottom:12px;">Tab History</div>
-        <div id="history-list" style="background:#1a2230; color:#fff; border-radius:6px; max-height:50vh; overflow-y:auto; padding:12px; margin-bottom:18px; box-shadow:0 2px 8px #0002;"></div>
-        <div style="text-align:right;">
+        <div id="history-list" style="background:#1a202a; color:#fff; border-radius:6px; padding:12px; max-height:45vh; overflow-y:auto; margin-bottom:16px;"></div>
+        <div style="display:flex; justify-content: flex-end; gap: 8px;">
+            <button id="clear-history-btn" style="background:#34495e; color:#fff; border:none; border-radius:4px; padding:8px 18px; font-size:15px; cursor:pointer;">Clear History</button>
             <button id="close-history-modal" style="background:#e74c3c; color:#fff; border:none; border-radius:4px; padding:8px 18px; font-size:15px; cursor:pointer;">Close</button>
         </div>
     </div>
@@ -1833,21 +1834,41 @@
             const historyModal = document.getElementById('history-modal');
             const historyList = document.getElementById('history-list');
             const closeHistoryModal = document.getElementById('close-history-modal');
+            const clearHistoryBtn = document.getElementById('clear-history-btn');
 
-            historyBtn.onclick = async () => {
+            async function refreshHistoryList() {
                 const rows = await ipcRenderer.invoke('get-history');
                 historyList.innerHTML = rows.map(row => `
-                    <div style="margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #34495e;">
-                        <strong style="color:#6dd5fa;">${row.title || row.url}</strong><br>
-                        <span style="font-size:12px; color:#bdc3c7;">${row.url}</span><br>
-                        <span style="font-size:11px; color:#aaa;">${new Date(row.timestamp).toLocaleString()}</span>
+                    <div style="margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; gap:8px;">
+                        <div style="flex:1;">
+                            <strong>${row.title || row.url}</strong><br>
+                            <span style="font-size:12px; color:#aaa;">${row.url}</span><br>
+                            <span style="font-size:11px; color:#888;">${new Date(row.timestamp).toLocaleString()}</span>
+                        </div>
+                        <button class="delete-history-entry-btn" data-id="${row.id}" title="Delete this entry" style="background:#e74c3c; color:#fff; border:none; border-radius:4px; padding:4px 10px; font-size:13px; cursor:pointer;">Delete</button>
                     </div>
                 `).join('');
+                // Add delete handlers
+                document.querySelectorAll('.delete-history-entry-btn').forEach(btn => {
+                    btn.onclick = async () => {
+                        ipcRenderer.send('delete-history-entry', btn.dataset.id);
+                        setTimeout(refreshHistoryList, 150); // slight delay to allow DB update
+                    };
+                });
+            }
+
+            historyBtn.onclick = async () => {
+                await refreshHistoryList();
                 historyModal.style.display = 'block';
             };
 
             closeHistoryModal.onclick = () => {
                 historyModal.style.display = 'none';
+            };
+
+            clearHistoryBtn.onclick = () => {
+                ipcRenderer.send('clear-history');
+                setTimeout(refreshHistoryList, 200); // slight delay to allow DB update
             };
 
             // Custom tooltip logic

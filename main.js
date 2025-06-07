@@ -396,3 +396,11 @@ ipcMain.handle('get-history', async () => {
     });
   });
 });
+
+ipcMain.on('clear-history', (event) => {
+  db.run('DELETE FROM history');
+});
+
+ipcMain.on('delete-history-entry', (event, id) => {
+  db.run('DELETE FROM history WHERE id = ?', [id]);
+});
