@@ -192,7 +192,132 @@
             z-index: 10;
         }
 
-        /* Sidebar styles */
+        /* Agentic Panel (Left) */
+        #agentic-toggle {
+            background: #9b59b6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+        }
+
+        #agentic-panel {
+            width: 0;
+            min-width: 0;
+            max-width: 320px;
+            background: #8e44ad;
+            color: white;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: width 0.3s;
+            z-index: 25;
+        }
+
+        #agentic-panel.open {
+            width: 320px;
+            min-width: 320px;
+        }
+
+        #agentic-header {
+            padding: 16px;
+            font-weight: bold;
+            font-size: 18px;
+            border-bottom: 1px solid #9b59b6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #agentic-minimize {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #agentic-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .agentic-input-group {
+            margin-bottom: 16px;
+        }
+
+        .agentic-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .agentic-input,
+        .agentic-textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #9b59b6;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .agentic-input::placeholder,
+        .agentic-textarea::placeholder {
+            color: #d1c4e9;
+        }
+
+        .agentic-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .agentic-button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .agentic-button:hover {
+            background: #c0392b;
+        }
+
+        .agentic-button.secondary {
+            background: #34495e;
+        }
+
+        .agentic-button.secondary:hover {
+            background: #2c3e50;
+        }
+
+        #agentic-results {
+            background: #9b59b6;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Search Panel (Right) */
         #sidebar-toggle {
             background: #3498db;
             color: white;
@@ -419,17 +544,61 @@
             font-size: 12px;
         }
 
-        /* PDF status indicators */
-        .pdf-success {
-            color: #27ae60;
+        /* Context menu styles */
+        #browser-context-menu {
+            position: fixed;
+            z-index: 99999;
+            background: #222c37;
+            color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            padding: 8px 0;
+            display: none;
+            min-width: 200px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            border: 1px solid #34495e;
         }
 
-        .pdf-error {
-            color: #e74c3c;
+        .context-menu-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
 
-        .pdf-warning {
-            color: #f39c12;
+        .context-menu-item:hover {
+            background-color: #3498db !important;
+        }
+
+        .context-menu-separator {
+            height: 1px;
+            background: #34495e;
+            margin: 4px 0;
+        }
+
+        /* Tooltip for keyboard shortcuts */
+        .keyboard-hint {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 1000;
+            display: none;
+            border: 1px solid #3498db;
+        }
+
+        /* Browser instance indicator */
+        #instance-indicator {
+            background: #27ae60;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 8px;
         }
     </style>
 </head>
@@ -442,19 +611,61 @@
         <span style="color:#fff;margin-left:12px;font-size:14px;">AI backend loading...</span>
     </div>
     <div id="toolbar">
-        <button id="sidebar-toggle">☰</button>
+        <button id="agentic-toggle">🤖</button>
+        <button id="sidebar-toggle">🔍</button>
         <button id="new-tab">+</button>
         <input type="text" id="url-bar" placeholder="Enter URL">
         <input type="text" id="search-bar" placeholder="Search tabs...">
         <button id="search-btn" title="Search"
             style="margin-left:4px; background:#3498db; color:white; border:none; border-radius:4px; padding:7px 10px; cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; height:32px;">🔍</button>
         <button id="settings-btn" title="Settings">⚙️</button>
+        <span id="instance-indicator">Instance: Loading...</span>
     </div>
     <div id="tabs-container"></div>
     <div id="main-content">
+        <!-- Agentic Panel (Left) -->
+        <div id="agentic-panel">
+            <div id="agentic-header">
+                <span>🤖 AI Assistant</span>
+                <button id="agentic-minimize">&raquo;</button>
+            </div>
+            <div id="agentic-content">
+                <div class="agentic-input-group">
+                    <label class="agentic-label">Request Type:</label>
+                    <select class="agentic-input" id="agentic-request-type">
+                        <option value="summarize">Summarize Tabs</option>
+                        <option value="analyze">Analyze Content</option>
+                        <option value="extract">Extract Information</option>
+                        <option value="compare">Compare Pages</option>
+                        <option value="custom">Custom Request</option>
+                    </select>
+                </div>
+                <div class="agentic-input-group">
+                    <label class="agentic-label">Your Request:</label>
+                    <textarea class="agentic-textarea" id="agentic-request-text"
+                        placeholder="Describe what you want the AI to do with your tabs..."></textarea>
+                </div>
+                <div class="agentic-input-group">
+                    <label class="agentic-label">Target Tabs:</label>
+                    <select class="agentic-input" id="agentic-target-tabs">
+                        <option value="all">All Open Tabs</option>
+                        <option value="active">Current Tab Only</option>
+                        <option value="search">From Last Search</option>
+                        <option value="select">Let Me Select</option>
+                    </select>
+                </div>
+                <button class="agentic-button" id="agentic-execute">🚀 Execute Request</button>
+                <button class="agentic-button secondary" id="agentic-clear">🗑️ Clear</button>
+                <div id="agentic-results">
+                    <strong>Results will appear here...</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Panel (Right) -->
         <div id="sidebar">
             <button id="sidebar-minimize" title="Minimize Sidebar">&laquo;</button>
-            <div id="sidebar-header">Tabs</div>
+            <div id="sidebar-header">Search Results</div>
             <div id="sidebar-search"
                 style="display:flex;align-items:center;padding:8px 12px 8px 12px;gap:4px;background:#222c37;">
                 <input id="sidebar-search-bar" type="text" placeholder="Search tabs..."
@@ -464,6 +675,7 @@
             </div>
             <div id="sidebar-tabs"></div>
         </div>
+
         <div id="webview-container">
             <div id="search-results"></div>
         </div>
@@ -473,6 +685,7 @@
     <div id="keyboard-hint" class="keyboard-hint">
         💡 <strong>Tip:</strong> Right-click links for options, or Ctrl+Click to open in new tab!
     </div>
+
     <div id="settings-panel">
         <div class="settings-header">
             <div class="settings-title">Settings</div>
@@ -491,6 +704,12 @@
             <label class="settings-checkbox-label">
                 <input type="checkbox" id="auto-close-sidebar" class="settings-checkbox">
                 Auto-close side panel after search
+            </label>
+        </div>
+        <div class="settings-group">
+            <label class="settings-checkbox-label">
+                <input type="checkbox" id="reprocess-tabs" class="settings-checkbox">
+                Re-process tabs when chunk size changes
             </label>
         </div>
     </div>
@@ -540,30 +759,76 @@
     <script>
         try {
             const { ipcRenderer } = require('electron');
+
+            // Generate unique browser instance ID
+            const BROWSER_ID = 'browser_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            console.log(`[Browser] Instance ID: ${BROWSER_ID}`);
+
+            // Update instance indicator
+            document.getElementById('instance-indicator').textContent = `Instance: ${BROWSER_ID.split('_')[1]}`;
+
             let activeTab = null;
             const tabs = new Map();
             let similarityThreshold = 0.5;
             let chunkSize = 1024;
             let autoCloseSidebar = false;
+            let reprocessTabs = false;
 
-            // Sidebar logic
+            // Panel management
+            const agentic = document.getElementById('agentic-panel');
+            const agenticToggle = document.getElementById('agentic-toggle');
+            const agenticMinimize = document.getElementById('agentic-minimize');
             const sidebar = document.getElementById('sidebar');
             const sidebarToggle = document.getElementById('sidebar-toggle');
             const sidebarTabs = document.getElementById('sidebar-tabs');
             const sidebarSearchBar = document.getElementById('sidebar-search-bar');
             const sidebarSearchBtn = document.getElementById('sidebar-search-btn');
+
             let lastSearchResults = [];
             let lastSearchQuery = '';
+
+            // Agentic panel controls
+            agenticToggle.onclick = () => {
+                agentic.classList.toggle('open');
+                console.log('[Agentic] Toggled agentic panel');
+            };
+
+            agenticMinimize.onclick = () => {
+                agentic.classList.remove('open');
+                console.log('[Agentic] Minimized agentic panel');
+            };
+
+            // Search panel controls
             sidebarToggle.onclick = () => {
-                if (lastSearchQuery.length > 2 && lastSearchResults.length > 0) {
-                    sidebar.classList.toggle('open');
-                    updateSidebarTabs();
-                    console.log('[Sidebar] Toggled sidebar');
-                } else {
-                    sidebar.classList.remove('open');
-                    console.log('[Sidebar] Sidebar not opened (no search results)');
+                // Always allow toggling the sidebar
+                sidebar.classList.toggle('open');
+                updateSidebarTabs();
+
+                // Update button text to show current state
+                const isOpen = sidebar.classList.contains('open');
+                sidebarToggle.innerHTML = isOpen ? '✕' : '🔍';
+                sidebarToggle.title = isOpen ? 'Close Search Panel' : 'Open Search Panel';
+
+                console.log(`[Sidebar] Toggled sidebar - now ${isOpen ? 'open' : 'closed'}`);
+
+                // If opening and we have no search results, show a helpful message
+                if (isOpen && (!lastSearchResults || lastSearchResults.length === 0)) {
+                    sidebarTabs.innerHTML = `
+                        <div style="padding: 20px; text-align: center; color: #bdc3c7;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">🔍</div>
+                            <div style="font-weight: bold; margin-bottom: 8px;">Search Panel</div>
+                            <div style="font-size: 14px; opacity: 0.8;">
+                                Enter a search query in the toolbar above<br>
+                                to find matching tabs
+                            </div>
+                            ${tabs.size > 0 ? `<div style="font-size: 12px; opacity: 0.6; margin-top: 10px;">
+                                Currently ${tabs.size} tab${tabs.size !== 1 ? 's' : ''} indexed
+                            </div>` : ''}
+                        </div>
+                    `;
                 }
             };
+
             function updateSidebarTabs() {
                 sidebarTabs.innerHTML = '';
                 if (lastSearchQuery.length > 2 && lastSearchResults.length > 0) {
@@ -572,7 +837,17 @@
                         if (tabObj) {
                             const el = document.createElement('div');
                             el.className = 'sidebar-tab' + (result.tab_id === activeTab ? ' active' : '');
-                            el.textContent = tabObj.tab.textContent || tabObj.webview.src;
+
+                            // Create tab display with metadata
+                            const title = result.title || tabObj.tab.textContent || 'Unknown';
+                            const similarity = (result.similarity * 100).toFixed(1);
+                            const cached = result.from_cache ? ' 📋' : '';
+
+                            el.innerHTML = `
+                                <div style="font-weight: bold; margin-bottom: 4px;">${title}${cached}</div>
+                                <div style="font-size: 12px; opacity: 0.8;">Similarity: ${similarity}%</div>
+                            `;
+
                             el.onclick = () => {
                                 setActiveTab(result.tab_id);
                                 sidebar.classList.remove('open');
@@ -584,6 +859,139 @@
                 }
             }
 
+            // Enhanced context menu system
+            let contextMenu = null;
+            let currentLinkUrl = null;
+
+            function createContextMenu() {
+                if (contextMenu) return contextMenu;
+
+                contextMenu = document.createElement('div');
+                contextMenu.id = 'browser-context-menu';
+                contextMenu.innerHTML = `
+                    <div class="context-menu-item" id="open-link-new-tab" style="display: none;">
+                        🔗 Open link in new tab
+                    </div>
+                    <div class="context-menu-item" id="copy-link" style="display: none;">
+                        📋 Copy link address
+                    </div>
+                    <div class="context-menu-separator" style="display: none;"></div>
+                    <div class="context-menu-item" id="refresh-page">
+                        🔄 Refresh page
+                    </div>
+                    <div class="context-menu-item" id="view-source">
+                        📄 View page source
+                    </div>
+                    <div class="context-menu-item" id="inspect-element">
+                        🔍 Inspect element
+                    </div>
+                `;
+
+                document.body.appendChild(contextMenu);
+                setupContextMenuHandlers();
+                return contextMenu;
+            }
+
+            function setupContextMenuHandlers() {
+                const menu = contextMenu;
+
+                menu.querySelector('#open-link-new-tab').onclick = () => {
+                    if (currentLinkUrl) {
+                        createNewTab(currentLinkUrl);
+                        console.log(`[Context Menu] Opening ${currentLinkUrl} in new tab`);
+                    }
+                    hideContextMenu();
+                };
+
+                menu.querySelector('#copy-link').onclick = () => {
+                    if (currentLinkUrl) {
+                        navigator.clipboard.writeText(currentLinkUrl).then(() => {
+                            console.log(`[Context Menu] Copied link: ${currentLinkUrl}`);
+                        }).catch(err => {
+                            console.error('[Context Menu] Failed to copy link:', err);
+                        });
+                    }
+                    hideContextMenu();
+                };
+
+                menu.querySelector('#refresh-page').onclick = () => {
+                    if (activeTab) {
+                        const webview = tabs.get(activeTab).webview;
+                        webview.reload();
+                        console.log('[Context Menu] Refreshing page');
+                    }
+                    hideContextMenu();
+                };
+
+                menu.querySelector('#view-source').onclick = () => {
+                    if (activeTab) {
+                        const webview = tabs.get(activeTab).webview;
+                        const sourceUrl = 'view-source:' + webview.src;
+                        createNewTab(sourceUrl);
+                        console.log('[Context Menu] Opening page source');
+                    }
+                    hideContextMenu();
+                };
+
+                menu.querySelector('#inspect-element').onclick = () => {
+                    if (activeTab) {
+                        const webview = tabs.get(activeTab).webview;
+                        webview.openDevTools();
+                        console.log('[Context Menu] Opening DevTools');
+                    }
+                    hideContextMenu();
+                };
+            }
+
+            function showContextMenu(x, y, linkUrl = null) {
+                const menu = createContextMenu();
+                currentLinkUrl = linkUrl;
+
+                // Show/hide link-specific items
+                const linkItems = ['open-link-new-tab', 'copy-link'];
+                const separator = menu.querySelector('.context-menu-separator');
+
+                linkItems.forEach(id => {
+                    const item = menu.querySelector(`#${id}`);
+                    item.style.display = linkUrl ? 'block' : 'none';
+                });
+                separator.style.display = linkUrl ? 'block' : 'none';
+
+                // Position the menu safely on screen
+                const menuRect = { width: 200, height: 150 }; // Approximate size
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+
+                let menuX = Math.max(0, Math.min(x, viewportWidth - menuRect.width));
+                let menuY = Math.max(0, Math.min(y, viewportHeight - menuRect.height));
+
+                menu.style.left = menuX + 'px';
+                menu.style.top = menuY + 'px';
+                menu.style.display = 'block';
+
+                console.log(`[Context Menu] Showing at (${menuX}, ${menuY})${linkUrl ? ' with link: ' + linkUrl : ''}`);
+            }
+
+            function hideContextMenu() {
+                if (contextMenu) {
+                    contextMenu.style.display = 'none';
+                    currentLinkUrl = null;
+                }
+            }
+
+            // Global context menu event handlers
+            document.addEventListener('click', (e) => {
+                if (contextMenu && !contextMenu.contains(e.target)) {
+                    hideContextMenu();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    hideContextMenu();
+                }
+            });
+
             // Initialize the first tab
             createNewTab();
 
@@ -593,9 +1001,13 @@
                 tab.className = 'tab';
                 tab.dataset.tabId = tabId;
                 tab.onclick = () => setActiveTab(tabId);
+
                 const webview = document.createElement('webview');
                 webview.src = url;
                 webview.className = 'webview';
+                webview.setAttribute('nodeintegration', 'false');
+                webview.setAttribute('websecurity', 'true');
+
                 const closeButton = document.createElement('div');
                 closeButton.className = 'tab-close';
                 closeButton.textContent = '×';
@@ -603,6 +1015,7 @@
                     e.stopPropagation();
                     closeTab(tabId);
                 };
+
                 tab.appendChild(closeButton);
                 document.getElementById('tabs-container').appendChild(tab);
                 document.getElementById('webview-container').appendChild(webview);
@@ -611,34 +1024,114 @@
                 updateSidebarTabs();
                 console.log(`[Tab] Created tab ${tabId} with URL: ${url}`);
 
-                async function updateTabWithContent() {
-                    webview.executeJavaScript(`document.title`).then(async title => {
-                        const url = webview.src;
-                        if (url.toLowerCase().endsWith('.pdf')) {
-                            await extractPdfText(tabId, title, url);
-                        } else {
-                            // Regular web page handling
-                            webview.executeJavaScript(`document.body ? document.body.innerText : ''`).then(pageText => {
-                                tab.textContent = title;
-                                updateTabInfo(tabId, title, url, pageText);
-                                updateSidebarTabs();
-                                console.log(`[Tab] Updated tab ${tabId} with title: ${title}`);
-                            }).catch(err => {
-                                console.warn(`[Tab] Failed to extract text from tab ${tabId}:`, err);
-                                tab.textContent = title || url;
-                                updateTabInfo(tabId, title, url, '');
-                                updateSidebarTabs();
-                            });
-                        }
-                    }).catch(err => {
-                        console.warn(`[Tab] Failed to get title for tab ${tabId}:`, err);
-                        tab.textContent = url;
-                        updateTabInfo(tabId, url, url, '');
-                        updateSidebarTabs();
+                // Enhanced webview event handling
+                webview.addEventListener('dom-ready', () => {
+                    console.log(`[Tab] DOM ready for tab ${tabId}`);
+                    attachContextMenuToWebview(webview);
+                    updateTabWithContent();
+                });
+
+                webview.addEventListener('did-finish-load', updateTabWithContent);
+                webview.addEventListener('page-title-updated', updateTabWithContent);
+
+                function attachContextMenuToWebview(webview) {
+                    // Inject context menu script
+                    webview.executeJavaScript(`
+                        // Remove existing listeners
+                        document.removeEventListener('contextmenu', window.handleBrowserContextMenu);
+                        
+                        // Context menu handler
+                        window.handleBrowserContextMenu = function(e) {
+                            e.preventDefault();
+                            
+                            let element = e.target;
+                            let linkUrl = null;
+                            
+                            // Find parent link
+                            while (element && element !== document.body) {
+                                if (element.tagName === 'A' && element.href) {
+                                    linkUrl = element.href;
+                                    break;
+                                }
+                                element = element.parentElement;
+                            }
+                            
+                            // Send context menu request
+                            console.log('BROWSER_CONTEXT_MENU:' + JSON.stringify({
+                                x: e.clientX,
+                                y: e.clientY,
+                                linkUrl: linkUrl
+                            }));
+                            
+                            return false;
+                        };
+                        
+                        // Enhanced link handling
+                        window.handleBrowserLinkClick = function(e) {
+                            if ((e.ctrlKey || e.metaKey || e.button === 1) && e.target.closest('a')) {
+                                e.preventDefault();
+                                const link = e.target.closest('a');
+                                if (link.href) {
+                                    console.log('BROWSER_NEW_TAB:' + link.href);
+                                }
+                            }
+                        };
+                        
+                        // Attach event listeners
+                        document.addEventListener('contextmenu', window.handleBrowserContextMenu);
+                        document.addEventListener('click', window.handleBrowserLinkClick);
+                        document.addEventListener('mousedown', window.handleBrowserLinkClick);
+                        
+                        console.log('Browser context menu handlers attached');
+                    `).catch(err => {
+                        console.warn(`[Context Menu] Failed to inject script into tab ${tabId}:`, err);
                     });
                 }
 
-                // Enhanced PDF text extraction function
+                // Listen for webview console messages
+                webview.addEventListener('console-message', (e) => {
+                    const message = e.message;
+
+                    if (message.startsWith('BROWSER_CONTEXT_MENU:')) {
+                        try {
+                            const data = JSON.parse(message.replace('BROWSER_CONTEXT_MENU:', ''));
+                            const webviewRect = webview.getBoundingClientRect();
+                            const screenX = webviewRect.left + data.x;
+                            const screenY = webviewRect.top + data.y;
+                            showContextMenu(screenX, screenY, data.linkUrl);
+                        } catch (err) {
+                            console.warn('[Context Menu] Failed to parse context menu data:', err);
+                        }
+                    } else if (message.startsWith('BROWSER_NEW_TAB:')) {
+                        const url = message.replace('BROWSER_NEW_TAB:', '');
+                        createNewTab(url);
+                        console.log(`[Webview] Opening link in new tab: ${url}`);
+                    }
+                });
+
+                async function updateTabWithContent() {
+                    try {
+                        const title = await webview.executeJavaScript('document.title').catch(() => 'Untitled');
+                        const url = webview.src;
+
+                        if (url.toLowerCase().endsWith('.pdf')) {
+                            await extractPdfText(tabId, title, url);
+                        } else {
+                            const pageText = await webview.executeJavaScript('document.body ? document.body.innerText : ""').catch(() => '');
+                            tab.textContent = title;
+                            updateTabInfo(tabId, title, url, pageText);
+                            updateSidebarTabs();
+                            console.log(`[Tab] Updated tab ${tabId} with title: ${title}`);
+                        }
+                    } catch (err) {
+                        console.warn(`[Tab] Failed to update tab ${tabId}:`, err);
+                        tab.textContent = webview.src;
+                        updateTabInfo(tabId, webview.src, webview.src, '');
+                        updateSidebarTabs();
+                    }
+                }
+
+                // Enhanced PDF text extraction (same as before but with browser ID)
                 async function extractPdfText(tabId, title, url) {
                     const tabObj = tabs.get(tabId);
                     if (!tabObj) return;
@@ -646,7 +1139,6 @@
                     let loadingDiv = null;
 
                     try {
-                        // Check if PDF.js is ready
                         if (!pdfJsReady) {
                             console.warn('[PDF] PDF.js not ready yet, waiting...');
                             setTimeout(() => extractPdfText(tabId, title, url), 1000);
@@ -655,18 +1147,15 @@
 
                         console.log(`[PDF] Starting to process PDF: ${url}`);
 
-                        // Show enhanced loading indicator
                         loadingDiv = document.createElement('div');
                         loadingDiv.className = 'pdf-loading';
                         loadingDiv.innerHTML = '📄 Loading PDF...<br><small>Extracting text content</small>';
                         document.body.appendChild(loadingDiv);
 
-                        // Try multiple methods to fetch the PDF
                         let pdfData = null;
                         let fetchMethod = '';
 
                         try {
-                            // Method 1: Direct fetch (may fail due to CORS)
                             const response = await fetch(url, {
                                 mode: 'cors',
                                 credentials: 'omit'
@@ -676,26 +1165,25 @@
                                 fetchMethod = 'direct fetch';
                             }
                         } catch (corsError) {
-                            console.warn('[PDF] Direct fetch failed (likely CORS), trying webview method');
+                            console.warn('[PDF] Direct fetch failed, trying webview method');
 
-                            // Method 2: Use webview to fetch (bypass CORS)
                             try {
                                 const base64Data = await webview.executeJavaScript(`
-                                (async function() {
-                                    try {
-                                        const response = await fetch('${url}');
-                                        const buffer = await response.arrayBuffer();
-                                        const bytes = new Uint8Array(buffer);
-                                        let binary = '';
-                                        for (let i = 0; i < bytes.byteLength; i++) {
-                                            binary += String.fromCharCode(bytes[i]);
+                                    (async function() {
+                                        try {
+                                            const response = await fetch('${url}');
+                                            const buffer = await response.arrayBuffer();
+                                            const bytes = new Uint8Array(buffer);
+                                            let binary = '';
+                                            for (let i = 0; i < bytes.byteLength; i++) {
+                                                binary += String.fromCharCode(bytes[i]);
+                                            }
+                                            return btoa(binary);
+                                        } catch (e) {
+                                            throw new Error('Webview fetch failed: ' + e.message);
                                         }
-                                        return btoa(binary);
-                                    } catch (e) {
-                                        throw new Error('Webview fetch failed: ' + e.message);
-                                    }
-                                })()
-                            `);
+                                    })()
+                                `);
 
                                 if (base64Data) {
                                     const binaryString = atob(base64Data);
@@ -707,18 +1195,15 @@
                                     fetchMethod = 'webview bypass';
                                 }
                             } catch (webviewError) {
-                                console.error('[PDF] Webview fetch also failed:', webviewError);
-                                throw new Error(`Both direct fetch and webview fetch failed. Direct: ${corsError.message}, Webview: ${webviewError.message}`);
+                                throw new Error(`Both fetch methods failed. Direct: ${corsError.message}, Webview: ${webviewError.message}`);
                             }
                         }
 
                         if (!pdfData) {
-                            throw new Error('Failed to fetch PDF data using any method');
+                            throw new Error('Failed to fetch PDF data');
                         }
 
                         console.log(`[PDF] Fetched ${pdfData.byteLength} bytes using ${fetchMethod}`);
-
-                        // Update loading indicator
                         loadingDiv.innerHTML = '📄 Processing PDF...<br><small>Parsing document structure</small>';
 
                         const pdf = await window.pdfjsLib.getDocument({
@@ -731,12 +1216,10 @@
                         const numPages = pdf.numPages;
                         console.log(`[PDF] Document loaded: ${numPages} pages`);
 
-                        // Process more pages for better content coverage
                         const maxPages = Math.min(5, numPages);
                         let fullText = '';
                         let documentInfo = '';
 
-                        // Try to get document metadata
                         try {
                             const metadata = await pdf.getMetadata();
                             if (metadata.info) {
@@ -749,7 +1232,6 @@
                             console.warn('[PDF] Could not extract metadata:', metaError);
                         }
 
-                        // Extract text from pages with better formatting
                         for (let i = 1; i <= maxPages; i++) {
                             try {
                                 loadingDiv.innerHTML = `📄 Processing PDF...<br><small>Extracting page ${i} of ${maxPages}</small>`;
@@ -757,7 +1239,6 @@
                                 const page = await pdf.getPage(i);
                                 const content = await page.getTextContent();
 
-                                // Enhanced text extraction with positioning
                                 const textItems = content.items;
                                 let pageText = '';
                                 let lastY = null;
@@ -766,12 +1247,10 @@
                                     const item = textItems[j];
                                     if (!item.str.trim()) continue;
 
-                                    // Add line breaks for significant Y position changes
                                     if (lastY !== null && Math.abs(item.transform[5] - lastY) > 5) {
                                         pageText += '\n';
                                     }
 
-                                    // Add space before text if not at line start
                                     if (pageText.length > 0 && !pageText.endsWith('\n') && !pageText.endsWith(' ')) {
                                         pageText += ' ';
                                     }
@@ -780,14 +1259,12 @@
                                     lastY = item.transform[5];
                                 }
 
-                                // Clean up the extracted text
                                 pageText = cleanPdfText(pageText);
 
                                 if (pageText.trim()) {
                                     fullText += `--- Page ${i} ---\n${pageText}\n\n`;
                                     console.log(`[PDF] Extracted page ${i}: ${pageText.length} characters`);
                                 } else {
-                                    console.warn(`[PDF] Page ${i} appears to be empty or unreadable`);
                                     fullText += `--- Page ${i} ---\n[Page appears to be empty or contains non-text content]\n\n`;
                                 }
 
@@ -797,17 +1274,14 @@
                             }
                         }
 
-                        // Combine metadata and content
-                        const finalText = documentInfo + fullText;
+                        let finalText = documentInfo + fullText;
 
-                        // Additional processing for remaining pages (just count them)
                         if (numPages > maxPages) {
                             finalText += `\n[Note: This document has ${numPages - maxPages} additional pages that were not processed for performance reasons.]\n`;
                         }
 
                         console.log(`[PDF] Total extracted text length: ${finalText.length}`);
 
-                        // Update tab with extracted content
                         const displayTitle = title || `PDF Document (${numPages} pages)`;
                         tabObj.tab.textContent = displayTitle;
                         updateTabInfo(tabId, displayTitle, url, finalText);
@@ -824,41 +1298,31 @@
                         updateTabInfo(tabId, errorTitle, url, errorContent);
                         updateSidebarTabs();
                     } finally {
-                        // Always remove loading indicator
                         if (loadingDiv && document.body.contains(loadingDiv)) {
                             document.body.removeChild(loadingDiv);
                         }
                     }
                 }
 
-                // Text cleaning function for better PDF text quality
                 function cleanPdfText(text) {
                     if (!text) return '';
 
                     return text
-                        // Remove excessive whitespace
                         .replace(/[ \t]+/g, ' ')
-                        // Remove excessive line breaks (more than 2)
                         .replace(/\n{3,}/g, '\n\n')
-                        // Remove trailing/leading whitespace from lines
                         .split('\n').map(line => line.trim()).join('\n')
-                        // Remove empty lines at start/end
                         .trim()
-                        // Fix common PDF extraction issues
-                        .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between camelCase
-                        .replace(/([.!?])([A-Z])/g, '$1 $2') // Add space after sentence endings
-                        // Remove weird unicode characters that often appear in PDFs
+                        .replace(/([a-z])([A-Z])/g, '$1 $2')
+                        .replace(/([.!?])([A-Z])/g, '$1 $2')
                         .replace(/[\u00A0\u2000-\u200B\u2028\u2029]/g, ' ')
-                        // Normalize quotes
                         .replace(/[""]/g, '"')
                         .replace(/['']/g, "'");
                 }
-
-                webview.addEventListener('did-finish-load', updateTabWithContent);
-                webview.addEventListener('page-title-updated', updateTabWithContent);
             }
 
             function setActiveTab(tabId) {
+                document.getElementById('search-results').style.display = 'none';
+
                 if (activeTab) {
                     const prevTab = tabs.get(activeTab);
                     prevTab.tab.classList.remove('active');
@@ -880,7 +1344,18 @@
                 tab.webview.remove();
                 tabs.delete(tabId);
                 updateSidebarTabs();
+
+                // Notify backend to remove tab
+                if (typeof ipcRenderer !== 'undefined') {
+                    ipcRenderer.send('remove-tab', {
+                        browser_id: BROWSER_ID,
+                        tab_id: tabId,
+                        type: 'remove_tab'
+                    });
+                }
+
                 console.log(`[Tab] Closed tab ${tabId}`);
+
                 if (activeTab === tabId) {
                     const nextTab = tabs.keys().next().value;
                     if (nextTab) {
@@ -894,44 +1369,57 @@
             function updateTabInfo(tabId, title, url, content = '') {
                 if (typeof ipcRenderer !== 'undefined') {
                     ipcRenderer.send('update-tab', {
+                        type: 'update_tab',
+                        browser_id: BROWSER_ID,
                         tab_id: tabId,
                         title: title,
                         url: url,
                         content: content
                     });
-                    console.log(`[Tab] Sent update for tab ${tabId}`);
+                    console.log(`[Tab] Sent update for tab ${tabId} to backend`);
                 }
             }
+
+            // Agentic functionality
+            document.getElementById('agentic-execute').onclick = () => {
+                const requestType = document.getElementById('agentic-request-type').value;
+                const requestText = document.getElementById('agentic-request-text').value;
+                const targetTabs = document.getElementById('agentic-target-tabs').value;
+                const resultsDiv = document.getElementById('agentic-results');
+
+                if (!requestText.trim()) {
+                    resultsDiv.style.display = 'block';
+                    resultsDiv.innerHTML = '<strong>Error:</strong> Please enter a request.';
+                    return;
+                }
+
+                resultsDiv.style.display = 'block';
+                resultsDiv.innerHTML = '<strong>Processing...</strong> Your request is being handled.';
+
+                // This would integrate with your agentic system
+                console.log(`[Agentic] Request: ${requestType} - ${requestText} - Target: ${targetTabs}`);
+
+                // Simulate processing
+                setTimeout(() => {
+                    resultsDiv.innerHTML = `
+                        <strong>Request Type:</strong> ${requestType}<br>
+                        <strong>Target:</strong> ${targetTabs}<br>
+                        <strong>Status:</strong> This is a placeholder for agentic functionality.<br>
+                        <strong>Note:</strong> Integrate with your AI system here.
+                    `;
+                }, 2000);
+            };
+
+            document.getElementById('agentic-clear').onclick = () => {
+                document.getElementById('agentic-request-text').value = '';
+                document.getElementById('agentic-results').style.display = 'none';
+            };
 
             // Event Listeners
             document.getElementById('new-tab').onclick = () => {
                 console.log('[UI] New tab button clicked');
                 createNewTab();
             };
-
-            // Add PDF test function for debugging
-            window.testPdfExtraction = async function (url) {
-                console.log(`[DEBUG] Testing PDF extraction for: ${url}`);
-                const testTabId = 'test-' + Date.now();
-                const testTab = { tab: { textContent: '' } };
-                tabs.set(testTabId, testTab);
-
-                try {
-                    await extractPdfText(testTabId, 'Test PDF', url);
-                    console.log('[DEBUG] PDF test completed successfully');
-                } catch (err) {
-                    console.error('[DEBUG] PDF test failed:', err);
-                } finally {
-                    tabs.delete(testTabId);
-                }
-            };
-
-            // Add debug info to console
-            console.log('[PDF.js] Debug info:', {
-                pdfJsLoaded: typeof window.pdfjsLib !== 'undefined',
-                pdfJsReady: pdfJsReady,
-                version: window.pdfjsLib ? window.pdfjsLib.version : 'not loaded'
-            });
 
             document.getElementById('url-bar').onkeypress = (e) => {
                 if (e.key === 'Enter') {
@@ -951,7 +1439,6 @@
                     sidebar.classList.remove('open');
                     lastSearchResults = [];
                     updateSidebarTabs();
-                    // Remove radiate effect from all tabs
                     for (const { tab } of tabs.values()) {
                         tab.classList.remove('radiate');
                     }
@@ -965,15 +1452,19 @@
                 console.log('[Search Button] Main toolbar search button clicked');
                 if (query.length > 2) {
                     if (typeof ipcRenderer !== 'undefined') {
-                        ipcRenderer.send('search-tabs', { query, threshold: similarityThreshold });
-                        console.log(`[Search] Sent search query (button): ${query} with threshold: ${similarityThreshold}`);
+                        ipcRenderer.send('search-tabs', {
+                            type: 'search',
+                            browser_id: BROWSER_ID,
+                            query,
+                            threshold: similarityThreshold
+                        });
+                        console.log(`[Search] Sent search query: ${query} for browser ${BROWSER_ID}`);
                     }
                 } else {
                     document.getElementById('search-results').style.display = 'none';
                     sidebar.classList.remove('open');
                     lastSearchResults = [];
                     updateSidebarTabs();
-                    // Remove radiate effect from all tabs
                     for (const { tab } of tabs.values()) {
                         tab.classList.remove('radiate');
                     }
@@ -981,23 +1472,26 @@
                 }
             };
 
-            // Sidebar search button logic
             sidebarSearchBtn.onclick = () => {
                 const query = sidebarSearchBar.value;
                 lastSearchQuery = query;
                 console.log('[Search Button] Sidebar search button clicked');
                 if (query.length > 2) {
                     if (typeof ipcRenderer !== 'undefined') {
-                        ipcRenderer.send('search-tabs', { query, threshold: similarityThreshold });
+                        ipcRenderer.send('search-tabs', {
+                            type: 'search',
+                            browser_id: BROWSER_ID,
+                            query,
+                            threshold: similarityThreshold
+                        });
                         sidebar.classList.add('open');
-                        console.log(`[Sidebar Search] Sent search query: ${query} with threshold: ${similarityThreshold}`);
+                        console.log(`[Sidebar Search] Sent search query: ${query} for browser ${BROWSER_ID}`);
                     }
                 } else {
                     document.getElementById('search-results').style.display = 'none';
                     sidebar.classList.remove('open');
                     lastSearchResults = [];
                     updateSidebarTabs();
-                    // Remove radiate effect from all tabs
                     for (const { tab } of tabs.values()) {
                         tab.classList.remove('radiate');
                     }
@@ -1005,23 +1499,20 @@
                 }
             };
 
-            // Also allow pressing Enter in sidebar search
             sidebarSearchBar.onkeypress = (e) => {
                 if (e.key === 'Enter') sidebarSearchBtn.onclick();
             };
 
-            // Add Enter key search for main search bar
             document.getElementById('search-bar').onkeypress = (e) => {
                 if (e.key === 'Enter') {
                     document.getElementById('search-btn').onclick();
                 }
             };
 
-            // Handle search results and radiate effect
+            // Handle search results and backend messages
             if (typeof ipcRenderer !== 'undefined') {
                 ipcRenderer.on('python-message', (event, message) => {
                     try {
-                        // Check if message is already an object (pre-parsed)
                         const data = typeof message === 'string' ? JSON.parse(message) : message;
 
                         if (data.type === 'backend_ready') {
@@ -1029,40 +1520,34 @@
                             hideTaskbar();
                             console.log('[Backend] Model loaded, hiding taskbar.');
                         }
+
                         if (!backendReady && (data.type === 'tab_updated' || data.type === 'search_results')) {
                             backendReady = true;
                             hideTaskbar();
                         }
-                        if (data.type === 'search_results') {
+
+                        if (data.type === 'search_results' && data.browser_id === BROWSER_ID) {
                             lastSearchResults = data.results;
                             updateSidebarTabs();
                             sidebar.classList.add('open');
-                            // Sync sidebar search bar with last query
                             sidebarSearchBar.value = lastSearchQuery;
-                            console.log(`[Search] Received search results:`, data.results);
+                            console.log(`[Search] Received ${data.results.length} search results for browser ${BROWSER_ID}`);
+
                             const resultsContainer = document.getElementById('search-results');
                             resultsContainer.innerHTML = '';
-                            // Remove radiate from all tabs first
+
                             for (const { tab } of tabs.values()) {
                                 tab.classList.remove('radiate');
                             }
-                            // Highlight and radiate matching tabs
+
                             data.results.forEach(result => {
                                 const tabObj = tabs.get(result.tab_id);
                                 if (tabObj) {
                                     tabObj.tab.classList.add('radiate');
-                                    // Optionally, also radiate in sidebar
-                                    const sidebarTabEls = sidebarTabs.querySelectorAll('.sidebar-tab');
-                                    sidebarTabEls.forEach(el => {
-                                        if (el.textContent === tabObj.tab.textContent) {
-                                            el.classList.add('radiate');
-                                            setTimeout(() => el.classList.remove('radiate'), 2400);
-                                        }
-                                    });
                                     setTimeout(() => tabObj.tab.classList.remove('radiate'), 2400);
                                 }
                             });
-                            // Show search results as before
+
                             data.results.forEach(result => {
                                 const tab = tabs.get(result.tab_id);
                                 if (tab) {
@@ -1070,12 +1555,18 @@
                                     resultItem.className = 'search-result-item';
                                     const url = tab.webview.src;
                                     const isPdf = url.toLowerCase().endsWith('.pdf');
+                                    const similarity = (result.similarity * 100).toFixed(1);
+                                    const cached = result.from_cache ? ' 📋' : '';
+
                                     resultItem.innerHTML = `
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        ${isPdf ? '<span style="color: #e74c3c;">📄</span>' : ''}
-                                        <span>${tab.tab.textContent}</span>
-                                    </div>
-                                `;
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            ${isPdf ? '<span style="color: #e74c3c;">📄</span>' : ''}
+                                            <div style="flex: 1;">
+                                                <div style="font-weight: bold;">${tab.tab.textContent}${cached}</div>
+                                                <div style="font-size: 12px; opacity: 0.7;">Similarity: ${similarity}%</div>
+                                            </div>
+                                        </div>
+                                    `;
                                     resultItem.onclick = () => {
                                         setActiveTab(result.tab_id);
                                         if (autoCloseSidebar) {
@@ -1087,8 +1578,17 @@
                             });
                             resultsContainer.style.display = 'block';
                         }
+
+                        if (data.type === 'tab_updated' && data.browser_id === BROWSER_ID) {
+                            console.log(`[Backend] Tab ${data.tab_id} updated with ${data.embeddings_count || 0} embeddings${data.from_cache ? ' (from cache)' : ''}`);
+                        }
+
+                        if (data.type === 'backend_stats') {
+                            console.log('[Backend Stats]', data);
+                        }
+
                     } catch (err) {
-                        console.error('Error handling search results:', err);
+                        console.error('Error handling backend message:', err);
                     }
                 });
             }
@@ -1096,21 +1596,21 @@
             // Backend loading progress bar logic
             let backendReady = false;
             const taskbar = document.getElementById('taskbar');
-            const progressBarInner = document.getElementById('progress-bar-inner');
+
             function showTaskbar() {
                 taskbar.style.display = 'flex';
                 taskbar.style.opacity = '1';
             }
+
             function hideTaskbar() {
                 taskbar.style.opacity = '0';
                 setTimeout(() => {
                     taskbar.style.display = 'none';
                 }, 600);
             }
-            // Show progress bar on load
+
             showTaskbar();
 
-            // Sidebar minimize button logic
             document.getElementById('sidebar-minimize').onclick = () => {
                 sidebar.classList.remove('open');
                 console.log('[Sidebar] Minimized sidebar');
@@ -1123,6 +1623,7 @@
             const similarityThresholdInput = document.getElementById('similarity-threshold');
             const chunkSizeInput = document.getElementById('chunk-size');
             const autoCloseSidebarInput = document.getElementById('auto-close-sidebar');
+            const reprocessTabsInput = document.getElementById('reprocess-tabs');
 
             settingsBtn.onclick = () => {
                 settingsPanel.classList.add('visible');
@@ -1140,11 +1641,12 @@
             chunkSizeInput.onchange = (e) => {
                 chunkSize = parseInt(e.target.value);
                 console.log(`[Settings] Updated chunk size to: ${chunkSize}`);
-                // Notify backend of chunk size change
                 if (typeof ipcRenderer !== 'undefined') {
                     ipcRenderer.send('update-settings', {
                         type: 'update_settings',
-                        chunk_size: chunkSize
+                        browser_id: BROWSER_ID,
+                        chunk_size: chunkSize,
+                        reprocess_tabs: reprocessTabsInput.checked
                     });
                 }
             };
@@ -1153,6 +1655,54 @@
                 autoCloseSidebar = e.target.checked;
                 console.log(`[Settings] Auto-close sidebar set to: ${autoCloseSidebar}`);
             };
+
+            reprocessTabsInput.onchange = (e) => {
+                reprocessTabs = e.target.checked;
+                console.log(`[Settings] Reprocess tabs set to: ${reprocessTabs}`);
+            };
+
+            // Show keyboard hint
+            setTimeout(() => {
+                const keyboardHint = document.getElementById('keyboard-hint');
+                keyboardHint.style.display = 'block';
+                setTimeout(() => {
+                    keyboardHint.style.opacity = '0';
+                    keyboardHint.style.transition = 'opacity 0.5s';
+                    setTimeout(() => {
+                        keyboardHint.style.display = 'none';
+                    }, 500);
+                }, 4000);
+            }, 2000);
+
+            // PDF test function for debugging
+            window.testPdfExtraction = async function (url) {
+                console.log(`[DEBUG] Testing PDF extraction for: ${url}`);
+                const testTabId = 'test-' + Date.now();
+                const testTab = { tab: { textContent: '' } };
+                tabs.set(testTabId, testTab);
+
+                try {
+                    await extractPdfText(testTabId, 'Test PDF', url);
+                    console.log('[DEBUG] PDF test completed successfully');
+                } catch (err) {
+                    console.error('[DEBUG] PDF test failed:', err);
+                } finally {
+                    tabs.delete(testTabId);
+                }
+            };
+
+            // Stats function for debugging backend
+            window.getBackendStats = function () {
+                if (typeof ipcRenderer !== 'undefined') {
+                    ipcRenderer.send('get-stats', {
+                        type: 'get_stats',
+                        browser_id: BROWSER_ID
+                    });
+                }
+            };
+
+            console.log('[Browser] Enhanced multi-instance browser ready with agentic panel');
+
         } catch (err) {
             console.error('Fatal error in main script:', err);
             alert('A fatal error occurred in the browser UI. Check the DevTools console for details.');
