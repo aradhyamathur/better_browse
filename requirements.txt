@@ -7,4 +7,5 @@ scikit-learn>=1.4.0
 beautifulsoup4==4.12.2
 requests==2.31.0
 python-dotenv==1.0.0
-sentence-transformers>=4.1.0 
+sentence-transformers>=4.1.0
+sqlite3 
