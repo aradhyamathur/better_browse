@@ -612,13 +612,20 @@
     </div>
     <div id="toolbar">
         <button id="agentic-toggle">🤖</button>
-        <button id="sidebar-toggle">🔍</button>
+        <div id="search-panel-toggle-container" style="display: flex; align-items: center; gap: 8px; margin-right: 8px;">
+            <button id="toggle-tab-search-panel" title="Toggle Tab Search Panel" style="background: #2980b9; color: white; border: none; border-radius: 4px; padding: 7px 10px; cursor: pointer; font-size: 15px;">🗂️ Tabs</button>
+        </div>
         <button id="new-tab">+</button>
         <input type="text" id="url-bar" placeholder="Enter URL">
         <input type="text" id="search-bar" placeholder="Search tabs...">
         <button id="search-btn" title="Search"
             style="margin-left:4px; background:#3498db; color:white; border:none; border-radius:4px; padding:7px 10px; cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; height:32px;">🔍</button>
+        <div id="nav-buttons" style="display: flex; gap: 6px; margin-top: 6px;">
+            <button id="back-btn" title="Back" style="padding: 6px 10px; border-radius: 4px; background: #34495e; color: white; border: none; cursor: pointer; font-size: 16px;">⟵</button>
+            <button id="forward-btn" title="Forward" style="padding: 6px 10px; border-radius: 4px; background: #34495e; color: white; border: none; cursor: pointer; font-size: 16px;">⟶</button>
+        </div>
         <button id="settings-btn" title="Settings">⚙️</button>
+        <button id="cookie-manager-btn" title="Manage Cookies" style="margin-left:8px;">🍪</button>
         <span id="instance-indicator">Instance: Loading...</span>
     </div>
     <div id="tabs-container"></div>
@@ -714,6 +721,12 @@
         </div>
     </div>
 
+    <div id="cookie-modal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; color:#222; border-radius:8px; box-shadow:0 4px 16px #0003; z-index:9999; padding:24px; min-width:400px;">
+        <div style="font-weight:bold; font-size:18px; margin-bottom:12px;">Cookie Manager</div>
+        <div id="cookie-list"></div>
+        <button id="close-cookie-modal" style="margin-top:16px;">Close</button>
+    </div>
+
     <!-- Load PDF.js from reliable CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
@@ -769,7 +782,7 @@
 
             let activeTab = null;
             const tabs = new Map();
-            let similarityThreshold = 0.5;
+            let similarityThreshold = 0.3;
             let chunkSize = 1024;
             let autoCloseSidebar = false;
             let reprocessTabs = false;
@@ -779,7 +792,6 @@
             const agenticToggle = document.getElementById('agentic-toggle');
             const agenticMinimize = document.getElementById('agentic-minimize');
             const sidebar = document.getElementById('sidebar');
-            const sidebarToggle = document.getElementById('sidebar-toggle');
             const sidebarTabs = document.getElementById('sidebar-tabs');
             const sidebarSearchBar = document.getElementById('sidebar-search-bar');
             const sidebarSearchBtn = document.getElementById('sidebar-search-btn');
@@ -799,36 +811,6 @@
             };
 
             // Search panel controls
-            sidebarToggle.onclick = () => {
-                // Always allow toggling the sidebar
-                sidebar.classList.toggle('open');
-                updateSidebarTabs();
-
-                // Update button text to show current state
-                const isOpen = sidebar.classList.contains('open');
-                sidebarToggle.innerHTML = isOpen ? '✕' : '🔍';
-                sidebarToggle.title = isOpen ? 'Close Search Panel' : 'Open Search Panel';
-
-                console.log(`[Sidebar] Toggled sidebar - now ${isOpen ? 'open' : 'closed'}`);
-
-                // If opening and we have no search results, show a helpful message
-                if (isOpen && (!lastSearchResults || lastSearchResults.length === 0)) {
-                    sidebarTabs.innerHTML = `
-                        <div style="padding: 20px; text-align: center; color: #bdc3c7;">
-                            <div style="font-size: 48px; margin-bottom: 10px;">🔍</div>
-                            <div style="font-weight: bold; margin-bottom: 8px;">Search Panel</div>
-                            <div style="font-size: 14px; opacity: 0.8;">
-                                Enter a search query in the toolbar above<br>
-                                to find matching tabs
-                            </div>
-                            ${tabs.size > 0 ? `<div style="font-size: 12px; opacity: 0.6; margin-top: 10px;">
-                                Currently ${tabs.size} tab${tabs.size !== 1 ? 's' : ''} indexed
-                            </div>` : ''}
-                        </div>
-                    `;
-                }
-            };
-
             function updateSidebarTabs() {
                 console.log('[Sidebar] updateSidebarTabs called');
                 console.log('lastSearchResults:', lastSearchResults);
@@ -1035,6 +1017,13 @@
                 webview.setAttribute('nodeintegration', 'false');
                 webview.setAttribute('websecurity', 'true');
 
+                // Tab label (title)
+                const tabLabel = document.createElement('span');
+                tabLabel.className = 'tab-label';
+                tabLabel.textContent = url || 'New Tab';
+                tab.appendChild(tabLabel);
+
+                // Close button
                 const closeButton = document.createElement('div');
                 closeButton.className = 'tab-close';
                 closeButton.textContent = '×';
@@ -1042,8 +1031,8 @@
                     e.stopPropagation();
                     closeTab(tabId);
                 };
-
                 tab.appendChild(closeButton);
+
                 document.getElementById('tabs-container').appendChild(tab);
                 document.getElementById('webview-container').appendChild(webview);
                 tabs.set(tabId, { tab, webview });
@@ -1145,14 +1134,18 @@
                             await extractPdfText(tabId, title, url);
                         } else {
                             const pageText = await webview.executeJavaScript('document.body ? document.body.innerText : ""').catch(() => '');
-                            tab.textContent = title;
+                            // Update only the tab label, not the whole tab
+                            const label = tab.querySelector('.tab-label');
+                            if (label) label.textContent = title;
                             updateTabInfo(tabId, title, url, pageText);
                             updateSidebarTabs();
                             console.log(`[Tab] Updated tab ${tabId} with title: ${title}`);
                         }
                     } catch (err) {
                         console.warn(`[Tab] Failed to update tab ${tabId}:`, err);
-                        tab.textContent = webview.src;
+                        // Update only the tab label, not the whole tab
+                        const label = tab.querySelector('.tab-label');
+                        if (label) label.textContent = webview.src;
                         updateTabInfo(tabId, webview.src, webview.src, '');
                         updateSidebarTabs();
                     }
@@ -1383,12 +1376,15 @@
 
                 console.log(`[Tab] Closed tab ${tabId}`);
 
-                if (activeTab === tabId) {
+                if (tabs.size === 0) {
+                    // All tabs closed, close the browser window
+                    if (typeof ipcRenderer !== 'undefined') {
+                        ipcRenderer.send('close-browser');
+                    }
+                } else if (activeTab === tabId) {
                     const nextTab = tabs.keys().next().value;
                     if (nextTab) {
                         setActiveTab(nextTab);
-                    } else {
-                        createNewTab();
                     }
                 }
             }
@@ -1546,6 +1542,20 @@
             document.getElementById('search-bar').onkeypress = (e) => {
                 if (e.key === 'Enter') {
                     document.getElementById('search-btn').onclick();
+                }
+            };
+
+            // Navigation button logic
+            document.getElementById('back-btn').onclick = () => {
+                if (activeTab) {
+                    const webview = tabs.get(activeTab).webview;
+                    if (webview.canGoBack()) webview.goBack();
+                }
+            };
+            document.getElementById('forward-btn').onclick = () => {
+                if (activeTab) {
+                    const webview = tabs.get(activeTab).webview;
+                    if (webview.canGoForward()) webview.goForward();
                 }
             };
 
@@ -1743,6 +1753,50 @@
             if (backendReady) {
                 hideTaskbar();
             }
+
+            // Toggle tab search side panel button logic
+            document.getElementById('toggle-tab-search-panel').onclick = () => {
+                sidebar.classList.toggle('open');
+                // Optionally update button text/icon
+                const isOpen = sidebar.classList.contains('open');
+                document.getElementById('toggle-tab-search-panel').textContent = isOpen ? '🗂️ Hide Tabs' : '🗂️ Tabs';
+            };
+
+            // Cookie management logic
+            const { remote } = require('electron');
+            const cookieBtn = document.getElementById('cookie-manager-btn');
+            const cookieModal = document.getElementById('cookie-modal');
+            const cookieList = document.getElementById('cookie-list');
+            const closeCookieModal = document.getElementById('close-cookie-modal');
+
+            cookieBtn.onclick = async () => {
+                if (!activeTab) return;
+                const webview = tabs.get(activeTab).webview;
+                const url = webview.src;
+                const ses = remote.session.fromPartition(webview.partition || '');
+
+                // Get cookies for the current URL
+                const cookies = await ses.cookies.get({ url });
+                cookieList.innerHTML = cookies.map(cookie => `
+                    <div style="margin-bottom:8px;">
+                        <strong>${cookie.name}</strong>: ${cookie.value}
+                        <button data-name="${cookie.name}" data-domain="${cookie.domain}" class="delete-cookie-btn" style="margin-left:8px;">Delete</button>
+                    </div>
+                `).join('');
+                cookieModal.style.display = 'block';
+
+                // Add delete handlers
+                document.querySelectorAll('.delete-cookie-btn').forEach(btn => {
+                    btn.onclick = async () => {
+                        await ses.cookies.remove(url, btn.dataset.name);
+                        btn.parentElement.remove();
+                    };
+                });
+            };
+
+            closeCookieModal.onclick = () => {
+                cookieModal.style.display = 'none';
+            };
 
         } catch (err) {
             console.error('Fatal error in main script:', err);

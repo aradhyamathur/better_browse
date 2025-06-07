@@ -1,0 +1,30 @@
+2025-06-07 20:17:03,522 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-07 20:17:07,155 [INFO] [Backend] SentenceTransformer model loaded on cuda
+2025-06-07 20:17:07,286 [INFO] Starting single-process CUDA backend
+2025-06-07 20:17:07,287 [INFO] Device: cuda
+2025-06-07 20:17:07,287 [INFO] Batch size: 64
+2025-06-07 20:17:07,287 [INFO] Max queue size: 1000
+2025-06-07 20:17:07,287 [INFO] Backend ready for processing
+2025-06-07 20:17:07,297 [INFO] Processing tab 1749307621294: 1 chunks
+2025-06-07 20:17:07,302 [INFO] Processed tab 1749307621294 in 0.01s: 3 embeddings
+2025-06-07 20:17:07,302 [INFO] Using cached embeddings for tab 1749307621294
+2025-06-07 20:17:07,302 [INFO] Using cached embeddings for tab 1749307621294
+2025-06-07 20:17:18,626 [INFO] Using cached embeddings for tab 1749307638126
+2025-06-07 20:17:18,627 [INFO] Using cached embeddings for tab 1749307638126
+2025-06-07 20:17:18,627 [INFO] Using cached embeddings for tab 1749307638126
+2025-06-07 20:17:22,578 [INFO] Processing tab 1749307638126: 7 chunks
+2025-06-07 20:17:22,601 [INFO] Processed tab 1749307638126 in 0.02s: 9 embeddings
+2025-06-07 20:17:22,601 [INFO] Using cached embeddings for tab 1749307638126
+2025-06-07 20:17:22,601 [INFO] Using cached embeddings for tab 1749307638126
+2025-06-07 20:17:24,149 [INFO] Using cached embeddings for tab 1749307643636
+2025-06-07 20:17:24,149 [INFO] Using cached embeddings for tab 1749307643636
+2025-06-07 20:17:24,149 [INFO] Using cached embeddings for tab 1749307643636
+2025-06-07 20:17:26,891 [INFO] Processing tab 1749307643636: 4 chunks
+2025-06-07 20:17:26,903 [INFO] Processed tab 1749307643636 in 0.01s: 6 embeddings
+2025-06-07 20:17:26,903 [INFO] Using cached embeddings for tab 1749307643636
+2025-06-07 20:17:26,904 [INFO] Using cached embeddings for tab 1749307643636
+2025-06-07 20:17:53,110 [INFO] Processing tab 1749307671497: 101 chunks
+2025-06-07 20:17:53,261 [INFO] Processed tab 1749307671497 in 0.15s: 103 embeddings
+2025-06-07 20:17:53,262 [INFO] Using cached embeddings for tab 1749307671497
+2025-06-07 20:17:53,263 [INFO] Using cached embeddings for tab 1749307671497
+2025-06-07 20:18:08,685 [INFO] Received signal 2, shutting down...

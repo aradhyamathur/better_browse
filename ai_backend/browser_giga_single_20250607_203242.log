@@ -1,0 +1,19 @@
+2025-06-07 20:32:42,801 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-07 20:32:46,459 [INFO] [Backend] SentenceTransformer model loaded on cuda
+2025-06-07 20:32:46,597 [INFO] Starting single-process CUDA backend
+2025-06-07 20:32:46,597 [INFO] Device: cuda
+2025-06-07 20:32:46,597 [INFO] Batch size: 64
+2025-06-07 20:32:46,597 [INFO] Max queue size: 1000
+2025-06-07 20:32:46,598 [INFO] Backend ready for processing
+2025-06-07 20:32:46,608 [INFO] Processing tab 1749308560298: 1 chunks
+2025-06-07 20:32:46,615 [INFO] Processed tab 1749308560298 in 0.01s: 3 embeddings
+2025-06-07 20:32:46,615 [INFO] Using cached embeddings for tab 1749308560298
+2025-06-07 20:32:46,615 [INFO] Using cached embeddings for tab 1749308560298
+2025-06-07 20:32:47,061 [INFO] Using cached embeddings for tab 1749308566565
+2025-06-07 20:32:47,062 [INFO] Using cached embeddings for tab 1749308566565
+2025-06-07 20:32:47,062 [INFO] Using cached embeddings for tab 1749308566565
+2025-06-07 20:32:52,921 [INFO] Processing tab 1749308566565: 7 chunks
+2025-06-07 20:32:52,939 [INFO] Processed tab 1749308566565 in 0.02s: 9 embeddings
+2025-06-07 20:32:52,939 [INFO] Using cached embeddings for tab 1749308566565
+2025-06-07 20:32:52,940 [INFO] Using cached embeddings for tab 1749308566565
+2025-06-07 20:32:55,434 [INFO] Received signal 2, shutting down...

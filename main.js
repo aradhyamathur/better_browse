@@ -361,4 +361,10 @@ app.on('before-quit', () => {
     }
 });
 
+ipcMain.on('close-browser', (event) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.close();
+    }
+});
+
 console.log('[Main] Electron main process started with enhanced Python backend support');

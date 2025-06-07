@@ -17,6 +17,10 @@ import logging
 import datetime
 import signal
 from collections import defaultdict, deque
+import sys
+# makes every `print()` flush automatically on `\n`
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(line_buffering=True)
 def setup_logging():
     log_filename = f"browser_giga_single_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
     
