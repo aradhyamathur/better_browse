@@ -1,0 +1,46 @@
+2025-06-07 17:32:53,828 [INFO] Starting single-process CUDA backend
+2025-06-07 17:32:53,828 [INFO] Device: cuda
+2025-06-07 17:32:53,828 [INFO] Batch size: 64
+2025-06-07 17:32:53,828 [INFO] Max queue size: 1000
+2025-06-07 17:32:53,828 [INFO] Starting request processing loop
+2025-06-07 17:32:53,829 [INFO] Backend ready for processing
+2025-06-07 17:32:53,839 [INFO] Processing tab 1749297766228: 1 chunks
+2025-06-07 17:32:53,846 [INFO] Processed tab 1749297766228 in 0.01s: 3 embeddings
+2025-06-07 17:32:53,846 [INFO] Using cached embeddings for tab 1749297766228
+2025-06-07 17:32:53,846 [INFO] Using cached embeddings for tab 1749297766228
+2025-06-07 17:32:58,228 [INFO] Found match in tab 1749297766228:
+2025-06-07 17:32:58,228 [INFO]   Title: Google
+2025-06-07 17:32:58,228 [INFO]   URL: https://www.google.com/
+2025-06-07 17:32:58,228 [INFO]   Similarity: 1.0000
+2025-06-07 17:32:58,228 [INFO]   Content Preview: About
+Store
+GmailImages
+Sign in
+ 
+Google Gemini, 
+help me with some ideas to reuse my old chopping board
+Google offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ
+India
+Advertisin...
+2025-06-07 17:32:58,228 [INFO]   Indexed: 2025-06-07 17:32:53
+2025-06-07 17:32:58,228 [INFO]   From Cache: True
+2025-06-07 17:32:58,228 [INFO]   --------------------------------------------------
+2025-06-07 17:32:58,228 [INFO] Search found 1 results for query: 'google...'
+2025-06-07 17:33:15,269 [INFO] Found match in tab 1749297766228:
+2025-06-07 17:33:15,269 [INFO]   Title: Google
+2025-06-07 17:33:15,269 [INFO]   URL: https://www.google.com/
+2025-06-07 17:33:15,269 [INFO]   Similarity: 1.0000
+2025-06-07 17:33:15,269 [INFO]   Content Preview: About
+Store
+GmailImages
+Sign in
+ 
+Google Gemini, 
+help me with some ideas to reuse my old chopping board
+Google offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ
+India
+Advertisin...
+2025-06-07 17:33:15,269 [INFO]   Indexed: 2025-06-07 17:32:53
+2025-06-07 17:33:15,269 [INFO]   From Cache: True
+2025-06-07 17:33:15,270 [INFO]   --------------------------------------------------
+2025-06-07 17:33:15,270 [INFO] Search found 1 results for query: 'google...'

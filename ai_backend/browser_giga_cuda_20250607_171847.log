@@ -1,0 +1,74 @@
+2025-06-07 17:18:47,204 [INFO] [MainThread] <module>:1012 - Starting BrowserGIGA backend with CUDA support
+2025-06-07 17:18:47,204 [INFO] [MainThread] <module>:1013 - Device: cuda
+2025-06-07 17:18:47,204 [INFO] [MainThread] <module>:1014 - Max workers: 4
+2025-06-07 17:18:47,204 [INFO] [MainThread] <module>:1015 - Batch size: 32
+2025-06-07 17:18:47,204 [INFO] [MainThread] <module>:1018 - CUDA threading optimizations enabled
+2025-06-07 17:18:47,204 [INFO] [MainThread] <module>:1019 - Per-thread model instances will be created
+2025-06-07 17:18:47,204 [DEBUG] [Thread-2] process_message:824 - Received message: {"type":"update_tab","browser_id":"browser_1749296919724_erjc5sk62","tab_id":"1749296919726","title":"Google","url":"https://www.google.com/","content":"About\nStore\nGmailImages\nSign in\n \nGoogle Gemini, \nhelp me with some ideas to reuse my old chopping board\nGoogle offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ\nIndia\nAdvertising\nBusiness\nHow Search works\nPrivacy\nTerms\nSettings"}
+2025-06-07 17:18:47,204 [INFO] [MainThread] <module>:1029 - CUDA backend started successfully
+2025-06-07 17:18:47,204 [INFO] [CUDATabProcessor_0] process_tab_content_worker:590 - [task_1_1749296927] Starting CUDA tab processing: 1749296919726 (thread: 135138903168576)
+2025-06-07 17:18:47,205 [INFO] [Thread-2] process_message:868 - Queued CUDA tab update: task_1_1749296927 (active: 1)
+2025-06-07 17:18:47,205 [INFO] [CUDATabProcessor_0] get_or_create_browser_instance:547 - Created new browser instance: browser_1749296919724_erjc5sk62
+2025-06-07 17:18:47,205 [DEBUG] [Thread-2] process_message:824 - Received message: {"type":"update_tab","browser_id":"browser_1749296919724_erjc5sk62","tab_id":"1749296919726","title":"Google","url":"https://www.google.com/","content":"About\nStore\nGmailImages\nSign in\n \nGoogle Gemini, \nhelp me with some ideas to reuse my old chopping board\nGoogle offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ\nIndia\nAdvertising\nBusiness\nHow Search works\nPrivacy\nTerms\nSettings"}
+2025-06-07 17:18:47,205 [DEBUG] [CUDATabProcessor_0] process_tab_content_worker:625 - [task_1_1749296927] Created 1 chunks
+2025-06-07 17:18:47,205 [INFO] [CUDATabProcessor_1] process_tab_content_worker:590 - [task_2_1749296927] Starting CUDA tab processing: 1749296919726 (thread: 135138894775872)
+2025-06-07 17:18:47,205 [INFO] [Thread-2] process_message:868 - Queued CUDA tab update: task_2_1749296927 (active: 2)
+2025-06-07 17:18:47,206 [DEBUG] [CUDATabProcessor_1] process_tab_content_worker:625 - [task_2_1749296927] Created 1 chunks
+2025-06-07 17:18:47,206 [DEBUG] [Thread-2] process_message:824 - Received message: {"type":"update_tab","browser_id":"browser_1749296919724_erjc5sk62","tab_id":"1749296919726","title":"Google","url":"https://www.google.com/","content":"About\nStore\nGmailImages\nSign in\n \nGoogle Gemini, \nhelp me with some ideas to reuse my old chopping board\nGoogle offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ\nIndia\nAdvertising\nBusiness\nHow Search works\nPrivacy\nTerms\nSettings"}
+2025-06-07 17:18:47,207 [INFO] [CUDATabProcessor_2] process_tab_content_worker:590 - [task_3_1749296927] Starting CUDA tab processing: 1749296919726 (thread: 135138886383168)
+2025-06-07 17:18:47,207 [INFO] [Thread-2] process_message:868 - Queued CUDA tab update: task_3_1749296927 (active: 3)
+2025-06-07 17:18:47,207 [DEBUG] [CUDATabProcessor_2] process_tab_content_worker:625 - [task_3_1749296927] Created 1 chunks
+2025-06-07 17:18:47,209 [INFO] [CUDATabProcessor_0] __init__:219 - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-07 17:18:47,210 [DEBUG] [CUDATabProcessor_0] _new_conn:1051 - Starting new HTTPS connection (1): huggingface.co:443
+2025-06-07 17:18:47,615 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json HTTP/11" 200 0
+2025-06-07 17:18:47,938 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json HTTP/11" 200 0
+2025-06-07 17:18:48,624 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md HTTP/11" 200 0
+2025-06-07 17:18:49,323 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json HTTP/11" 200 0
+2025-06-07 17:18:49,567 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json HTTP/11" 200 0
+2025-06-07 17:18:50,206 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json HTTP/11" 404 0
+2025-06-07 17:18:50,468 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json HTTP/11" 200 0
+2025-06-07 17:18:50,756 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json HTTP/11" 200 0
+2025-06-07 17:18:51,005 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/11" 404 64
+2025-06-07 17:18:51,288 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2/revision/main HTTP/11" 200 6805
+2025-06-07 17:18:51,541 [DEBUG] [CUDATabProcessor_0] _make_request:546 - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2 HTTP/11" 200 6805
+2025-06-07 17:18:51,754 [DEBUG] [CUDATabProcessor_0] get_embeddings_batch:412 - Generated 3 embeddings in 4.55s
+2025-06-07 17:18:51,754 [DEBUG] [CUDATabProcessor_0] rebuild_search_index:574 - Rebuilt search index with 3 embeddings
+2025-06-07 17:18:51,756 [INFO] [CUDATabProcessor_0] process_tab_content_worker:674 - [task_1_1749296927] CUDA processing completed in 4.55s
+2025-06-07 17:18:51,759 [INFO] [CUDATabProcessor_1] __init__:219 - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-07 17:18:51,760 [DEBUG] [CUDATabProcessor_1] _new_conn:1051 - Starting new HTTPS connection (1): huggingface.co:443
+2025-06-07 17:18:52,551 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json HTTP/11" 200 0
+2025-06-07 17:18:52,809 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json HTTP/11" 200 0
+2025-06-07 17:18:53,100 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md HTTP/11" 200 0
+2025-06-07 17:18:53,838 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json HTTP/11" 200 0
+2025-06-07 17:18:54,410 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json HTTP/11" 200 0
+2025-06-07 17:18:54,655 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json HTTP/11" 404 0
+2025-06-07 17:18:55,295 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json HTTP/11" 200 0
+2025-06-07 17:18:55,568 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json HTTP/11" 200 0
+2025-06-07 17:18:55,827 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/11" 404 64
+2025-06-07 17:18:56,107 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2/revision/main HTTP/11" 200 6805
+2025-06-07 17:18:56,379 [DEBUG] [CUDATabProcessor_1] _make_request:546 - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2 HTTP/11" 200 6805
+2025-06-07 17:18:56,414 [DEBUG] [CUDATabProcessor_1] get_embeddings_batch:412 - Generated 3 embeddings in 4.66s
+2025-06-07 17:18:56,414 [DEBUG] [CUDATabProcessor_1] rebuild_search_index:574 - Rebuilt search index with 3 embeddings
+2025-06-07 17:18:56,415 [INFO] [CUDATabProcessor_1] process_tab_content_worker:674 - [task_2_1749296927] CUDA processing completed in 9.21s
+2025-06-07 17:18:56,417 [INFO] [CUDATabProcessor_2] __init__:219 - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-07 17:18:56,418 [DEBUG] [CUDATabProcessor_2] _new_conn:1051 - Starting new HTTPS connection (1): huggingface.co:443
+2025-06-07 17:18:56,663 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json HTTP/11" 200 0
+2025-06-07 17:18:56,909 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json HTTP/11" 200 0
+2025-06-07 17:18:57,197 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md HTTP/11" 200 0
+2025-06-07 17:18:57,455 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json HTTP/11" 200 0
+2025-06-07 17:18:57,697 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json HTTP/11" 200 0
+2025-06-07 17:18:57,940 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json HTTP/11" 404 0
+2025-06-07 17:18:58,164 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json HTTP/11" 200 0
+2025-06-07 17:18:58,885 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json HTTP/11" 200 0
+2025-06-07 17:18:59,130 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/11" 404 64
+2025-06-07 17:18:59,398 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2/revision/main HTTP/11" 200 6805
+2025-06-07 17:18:59,651 [DEBUG] [CUDATabProcessor_2] _make_request:546 - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2 HTTP/11" 200 6805
+2025-06-07 17:18:59,684 [DEBUG] [CUDATabProcessor_2] get_embeddings_batch:412 - Generated 3 embeddings in 3.27s
+2025-06-07 17:18:59,685 [DEBUG] [CUDATabProcessor_2] rebuild_search_index:574 - Rebuilt search index with 3 embeddings
+2025-06-07 17:18:59,685 [INFO] [CUDATabProcessor_2] process_tab_content_worker:674 - [task_3_1749296927] CUDA processing completed in 12.48s
+2025-06-07 17:22:30,284 [INFO] [MainThread] signal_handler:995 - Received signal 2, shutting down CUDA backend...
+2025-06-07 17:22:30,284 [INFO] [MainThread] shutdown:290 - Final CUDA cleanup completed
+2025-06-07 17:22:30,284 [INFO] [MainThread] signal_handler:1001 - Final CUDA cleanup completed
+2025-06-07 17:22:30,284 [INFO] [MainThread] <module>:1039 - Shutting down CUDA executor...
+2025-06-07 17:22:30,284 [INFO] [MainThread] shutdown:290 - Final CUDA cleanup completed
+2025-06-07 17:22:30,284 [INFO] [MainThread] <module>:1041 - Shutdown complete

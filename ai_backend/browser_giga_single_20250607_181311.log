@@ -1,0 +1,12 @@
+2025-06-07 18:13:11,085 [INFO] Starting single-process CUDA backend
+2025-06-07 18:13:11,085 [INFO] Device: cuda
+2025-06-07 18:13:11,085 [INFO] Batch size: 64
+2025-06-07 18:13:11,085 [INFO] Max queue size: 1000
+2025-06-07 18:13:11,085 [INFO] Starting request processing loop
+2025-06-07 18:13:11,086 [INFO] Backend ready for processing
+2025-06-07 18:13:11,087 [INFO] Processing tab 1749300183811: 1 chunks
+2025-06-07 18:13:11,092 [INFO] Processed tab 1749300183811 in 0.01s: 3 embeddings
+2025-06-07 18:13:11,092 [INFO] Using cached embeddings for tab 1749300183811
+2025-06-07 18:13:11,092 [INFO] Using cached embeddings for tab 1749300183811
+2025-06-07 18:13:13,985 [ERROR] Error in search: No module named 'ipdb'
+2025-06-07 18:13:19,536 [INFO] Received signal 2, shutting down...

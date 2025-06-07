@@ -830,10 +830,16 @@
             };
 
             function updateSidebarTabs() {
+                console.log('[Sidebar] updateSidebarTabs called');
+                console.log('lastSearchResults:', lastSearchResults);
+                console.log('tabs:', Array.from(tabs.keys()));
                 sidebarTabs.innerHTML = '';
-                if (lastSearchQuery.length > 2 && lastSearchResults.length > 0) {
+                if (lastSearchResults && lastSearchResults.length > 0) {
                     for (const result of lastSearchResults) {
                         const tabObj = tabs.get(result.tab_id);
+                        if (!tabObj) {
+                            console.warn('[Sidebar] No tabObj found for tab_id:', result.tab_id);
+                        }
                         if (tabObj) {
                             const el = document.createElement('div');
                             el.className = 'sidebar-tab' + (result.tab_id === activeTab ? ' active' : '');
@@ -842,20 +848,41 @@
                             const title = result.title || tabObj.tab.textContent || 'Unknown';
                             const similarity = (result.similarity * 100).toFixed(1);
                             const cached = result.from_cache ? ' 📋' : '';
+                            const url = tabObj.webview.src;
+                            const isPdf = url.toLowerCase().endsWith('.pdf');
 
                             el.innerHTML = `
-                                <div style="font-weight: bold; margin-bottom: 4px;">${title}${cached}</div>
-                                <div style="font-size: 12px; opacity: 0.8;">Similarity: ${similarity}%</div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    ${isPdf ? '<span style="color: #e74c3c;">📄</span>' : ''}
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: bold;">${title}${cached}</div>
+                                        <div style="font-size: 12px; opacity: 0.7;">Similarity: ${similarity}%</div>
+                                    </div>
+                                </div>
                             `;
 
                             el.onclick = () => {
                                 setActiveTab(result.tab_id);
-                                sidebar.classList.remove('open');
+                                if (autoCloseSidebar) {
+                                    sidebar.classList.remove('open');
+                                }
                                 console.log(`[Sidebar] Clicked sidebar tab for tabId: ${result.tab_id}`);
                             };
                             sidebarTabs.appendChild(el);
                         }
                     }
+                } else if (lastSearchQuery && lastSearchQuery.length > 2) {
+                    // Show "No results" message if we have a search query but no results
+                    sidebarTabs.innerHTML = `
+                        <div style="padding: 20px; text-align: center; color: #bdc3c7;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">🔍</div>
+                            <div style="font-weight: bold; margin-bottom: 8px;">No Results Found</div>
+                            <div style="font-size: 14px; opacity: 0.8;">
+                                No tabs matched your search for "${lastSearchQuery}"<br>
+                                Try adjusting the similarity threshold in settings
+                            </div>
+                        </div>
+                    `;
                 }
             }
 
@@ -1451,6 +1478,19 @@
                 lastSearchQuery = query;
                 console.log('[Search Button] Main toolbar search button clicked');
                 if (query.length > 2) {
+                    // Show loading state in sidebar
+                    sidebar.classList.add('open');
+                    sidebarTabs.innerHTML = `
+                        <div style="padding: 20px; text-align: center; color: #bdc3c7;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">🔍</div>
+                            <div style="font-weight: bold; margin-bottom: 8px;">Searching...</div>
+                            <div style="font-size: 14px; opacity: 0.8;">
+                                Searching through ${tabs.size} tab${tabs.size !== 1 ? 's' : ''}<br>
+                                for "${query}"
+                            </div>
+                        </div>
+                    `;
+                    
                     if (typeof ipcRenderer !== 'undefined') {
                         ipcRenderer.send('search-tabs', {
                             type: 'search',
@@ -1511,9 +1551,19 @@
 
             // Handle search results and backend messages
             if (typeof ipcRenderer !== 'undefined') {
+                console.log('[IPC] Setting up python-message listener');
                 ipcRenderer.on('python-message', (event, message) => {
+                    console.log('#########################');
+                    console.log('[IPC] Received message from Python backend:');
+                    console.log('Event:', event);
+                    console.log('Message type:', typeof message);
+                    console.log('Raw message:', message);
+                    
                     try {
                         const data = typeof message === 'string' ? JSON.parse(message) : message;
+                        console.log('[IPC] Parsed message data:', data);
+                        console.log('[IPC] Message type:', data.type);
+                        console.log('[IPC] Browser ID:', data.browser_id);
 
                         if (data.type === 'backend_ready') {
                             backendReady = true;
@@ -1527,15 +1577,31 @@
                         }
 
                         if (data.type === 'search_results' && data.browser_id === BROWSER_ID) {
+                            console.log('######################### search_results');
+
+                            console.log('data.results', data.results);
                             lastSearchResults = data.results;
+                            lastSearchQuery = data.query || lastSearchQuery;
                             updateSidebarTabs();
                             sidebar.classList.add('open');
                             sidebarSearchBar.value = lastSearchQuery;
                             console.log(`[Search] Received ${data.results.length} search results for browser ${BROWSER_ID}`);
 
-                            const resultsContainer = document.getElementById('search-results');
-                            resultsContainer.innerHTML = '';
+                            // Show "No results" message if needed
+                            if (data.results.length === 0) {
+                                sidebarTabs.innerHTML = `
+                                    <div style="padding: 20px; text-align: center; color: #bdc3c7;">
+                                        <div style="font-size: 48px; margin-bottom: 10px;">🔍</div>
+                                        <div style="font-weight: bold; margin-bottom: 8px;">No Results Found</div>
+                                        <div style="font-size: 14px; opacity: 0.8;">
+                                            No tabs matched your search for "${lastSearchQuery}"<br>
+                                            Try adjusting the similarity threshold in settings
+                                        </div>
+                                    </div>
+                                `;
+                            }
 
+                            // Highlight matching tabs
                             for (const { tab } of tabs.values()) {
                                 tab.classList.remove('radiate');
                             }
@@ -1547,36 +1613,6 @@
                                     setTimeout(() => tabObj.tab.classList.remove('radiate'), 2400);
                                 }
                             });
-
-                            data.results.forEach(result => {
-                                const tab = tabs.get(result.tab_id);
-                                if (tab) {
-                                    const resultItem = document.createElement('div');
-                                    resultItem.className = 'search-result-item';
-                                    const url = tab.webview.src;
-                                    const isPdf = url.toLowerCase().endsWith('.pdf');
-                                    const similarity = (result.similarity * 100).toFixed(1);
-                                    const cached = result.from_cache ? ' 📋' : '';
-
-                                    resultItem.innerHTML = `
-                                        <div style="display: flex; align-items: center; gap: 8px;">
-                                            ${isPdf ? '<span style="color: #e74c3c;">📄</span>' : ''}
-                                            <div style="flex: 1;">
-                                                <div style="font-weight: bold;">${tab.tab.textContent}${cached}</div>
-                                                <div style="font-size: 12px; opacity: 0.7;">Similarity: ${similarity}%</div>
-                                            </div>
-                                        </div>
-                                    `;
-                                    resultItem.onclick = () => {
-                                        setActiveTab(result.tab_id);
-                                        if (autoCloseSidebar) {
-                                            sidebar.classList.remove('open');
-                                        }
-                                    };
-                                    resultsContainer.appendChild(resultItem);
-                                }
-                            });
-                            resultsContainer.style.display = 'block';
                         }
 
                         if (data.type === 'tab_updated' && data.browser_id === BROWSER_ID) {
@@ -1702,6 +1738,11 @@
             };
 
             console.log('[Browser] Enhanced multi-instance browser ready with agentic panel');
+
+            // Hide taskbar if backend is already ready on load
+            if (backendReady) {
+                hideTaskbar();
+            }
 
         } catch (err) {
             console.error('Fatal error in main script:', err);

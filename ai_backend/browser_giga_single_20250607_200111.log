@@ -1,0 +1,32 @@
+2025-06-07 20:01:11,174 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-07 20:01:14,448 [INFO] [Backend] SentenceTransformer model loaded on cuda
+2025-06-07 20:01:14,585 [INFO] Starting single-process CUDA backend
+2025-06-07 20:01:14,585 [INFO] Device: cuda
+2025-06-07 20:01:14,585 [INFO] Batch size: 64
+2025-06-07 20:01:14,585 [INFO] Max queue size: 1000
+2025-06-07 20:01:14,585 [INFO] Starting request processing loop
+2025-06-07 20:01:14,586 [INFO] Backend ready for processing
+2025-06-07 20:01:14,596 [INFO] Processing tab 1749306668465: 1 chunks
+2025-06-07 20:01:14,601 [INFO] Processed tab 1749306668465 in 0.01s: 3 embeddings
+2025-06-07 20:01:14,601 [INFO] Using cached embeddings for tab 1749306668465
+2025-06-07 20:01:14,601 [INFO] Using cached embeddings for tab 1749306668465
+2025-06-07 20:01:14,605 [INFO] Found match in tab 1749306668465:
+2025-06-07 20:01:14,605 [INFO]   Title: Google
+2025-06-07 20:01:14,605 [INFO]   URL: https://www.google.com/
+2025-06-07 20:01:14,605 [INFO]   Similarity: 1.0000
+2025-06-07 20:01:14,605 [INFO]   Content Preview: About
+Store
+GmailImages
+Sign in
+ 
+Google Gemini, 
+help me with some ideas to reuse my old chopping board
+Google offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ
+India
+Advertisin...
+2025-06-07 20:01:14,605 [INFO]   Indexed: 2025-06-07 20:01:14
+2025-06-07 20:01:14,605 [INFO]   From Cache: True
+2025-06-07 20:01:14,605 [INFO]   --------------------------------------------------
+2025-06-07 20:01:14,605 [INFO] Search found 1 results for query: 'google...'
+2025-06-07 20:01:14,605 [INFO] #########################
+2025-06-07 20:01:32,978 [INFO] Received signal 2, shutting down...

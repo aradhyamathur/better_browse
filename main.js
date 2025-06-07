@@ -81,7 +81,7 @@ function startPythonBackend() {
         try {
             console.log(`[Main] Trying to start: ${pythonExe} ${foundPythonFile} in ${workingDirectory}`);
             
-            pythonProcess = spawn(pythonExe, [foundPythonFile], {
+            pythonProcess = spawn(pythonExe, ['-u', foundPythonFile], {
                 stdio: ['pipe', 'pipe', 'pipe'],
                 cwd: workingDirectory,  // Use the directory where we found the Python file
                 env: currentEnv         // Pass the current environment
@@ -94,24 +94,26 @@ function startPythonBackend() {
             });
             
             pythonProcess.stdout.on('data', (data) => {
+                console.log('[Main] Raw data from Python stdout:', data.toString());
                 const lines = data.toString().split('\n');
                 lines.forEach(line => {
                     if (line.trim()) {
                         try {
                             // Try to parse as JSON (backend messages)
                             const message = JSON.parse(line.trim());
-                            console.log('[Main] Backend message:', message);
+                            console.log('[Main] Successfully parsed JSON message:', message);
                             
                             // Forward to all renderer processes
                             const allWindows = BrowserWindow.getAllWindows();
                             allWindows.forEach(window => {
                                 if (window && !window.isDestroyed()) {
+                                    console.log('[Main] Forwarding message to window:', window.id);
                                     window.webContents.send('python-message', message);
                                 }
                             });
                         } catch (e) {
                             // Regular log message
-                            console.log('[Python]', line.trim());
+                            console.log('[Python] Non-JSON message:', line.trim());
                         }
                     }
                 });
@@ -119,7 +121,7 @@ function startPythonBackend() {
             
             pythonProcess.stderr.on('data', (data) => {
                 const errorMsg = data.toString();
-                console.error('[Python Error]', errorMsg);
+                console.error('[Python Error] Raw stderr:', errorMsg);
                 
                 // Check for common Python errors
                 if (errorMsg.includes('ModuleNotFoundError') || errorMsg.includes('ImportError')) {
@@ -200,6 +202,11 @@ app.on('activate', () => {
 // IPC Handlers - IMPORTANT: Make sure these pass through all data correctly
 ipcMain.on('search-tabs', (event, data) => {
     console.log('[Main] Received search-tabs request:', JSON.stringify(data));
+    console.log('[Main] Python process status:', {
+        exists: !!pythonProcess,
+        writable: pythonProcess?.stdin?.writable,
+        killed: pythonProcess?.killed
+    });
     
     if (!pythonProcess || !pythonProcess.stdin.writable) {
         console.error('[Main] Python process not available for search');
@@ -222,6 +229,7 @@ ipcMain.on('search-tabs', (event, data) => {
     
     try {
         pythonProcess.stdin.write(JSON.stringify(message) + '\n');
+        console.log('[Main] Successfully wrote message to Python stdin');
     } catch (err) {
         console.error('[Main] Error writing to Python process:', err);
         event.reply('python-message', {

@@ -1,0 +1,47 @@
+2025-06-07 18:10:14,447 [INFO] Starting single-process CUDA backend
+2025-06-07 18:10:14,447 [INFO] Device: cuda
+2025-06-07 18:10:14,447 [INFO] Batch size: 64
+2025-06-07 18:10:14,447 [INFO] Max queue size: 1000
+2025-06-07 18:10:14,447 [INFO] Starting request processing loop
+2025-06-07 18:10:14,448 [INFO] Backend ready for processing
+2025-06-07 18:10:14,458 [INFO] Processing tab 1749300007698: 1 chunks
+2025-06-07 18:10:14,465 [INFO] Processed tab 1749300007698 in 0.01s: 3 embeddings
+2025-06-07 18:10:14,466 [INFO] Using cached embeddings for tab 1749300007698
+2025-06-07 18:10:14,466 [INFO] Using cached embeddings for tab 1749300007698
+2025-06-07 18:10:18,408 [INFO] Found match in tab 1749300007698:
+2025-06-07 18:10:18,408 [INFO]   Title: Google
+2025-06-07 18:10:18,408 [INFO]   URL: https://www.google.com/
+2025-06-07 18:10:18,409 [INFO]   Similarity: 1.0000
+2025-06-07 18:10:18,409 [INFO]   Content Preview: About
+Store
+GmailImages
+Sign in
+ 
+Google Gemini, 
+help me with some ideas to reuse my old chopping board
+Google offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ
+India
+Advertisin...
+2025-06-07 18:10:18,409 [INFO]   Indexed: 2025-06-07 18:10:14
+2025-06-07 18:10:18,409 [INFO]   From Cache: True
+2025-06-07 18:10:18,409 [INFO]   --------------------------------------------------
+2025-06-07 18:10:18,409 [INFO] Search found 1 results for query: 'google...'
+2025-06-07 18:13:00,152 [INFO] Found match in tab 1749300007698:
+2025-06-07 18:13:00,152 [INFO]   Title: Google
+2025-06-07 18:13:00,152 [INFO]   URL: https://www.google.com/
+2025-06-07 18:13:00,152 [INFO]   Similarity: 1.0000
+2025-06-07 18:13:00,152 [INFO]   Content Preview: About
+Store
+GmailImages
+Sign in
+ 
+Google Gemini, 
+help me with some ideas to reuse my old chopping board
+Google offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ
+India
+Advertisin...
+2025-06-07 18:13:00,152 [INFO]   Indexed: 2025-06-07 18:10:14
+2025-06-07 18:13:00,152 [INFO]   From Cache: True
+2025-06-07 18:13:00,152 [INFO]   --------------------------------------------------
+2025-06-07 18:13:00,152 [INFO] Search found 1 results for query: 'google...'
+2025-06-07 18:13:02,460 [INFO] Received signal 2, shutting down...

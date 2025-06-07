@@ -1,0 +1,13 @@
+2025-06-07 17:23:42,816 [INFO] Starting single-process CUDA backend
+2025-06-07 17:23:42,816 [INFO] Device: cuda
+2025-06-07 17:23:42,816 [INFO] Batch size: 64
+2025-06-07 17:23:42,816 [INFO] Max queue size: 1000
+2025-06-07 17:23:42,816 [INFO] Backend ready for processing
+2025-06-07 17:23:42,816 [INFO] Starting request processing loop
+2025-06-07 17:23:42,826 [INFO] Processing tab 1749297215859: 1 chunks
+2025-06-07 17:23:42,835 [INFO] Processed tab 1749297215859 in 0.01s: 3 embeddings
+2025-06-07 17:23:42,835 [INFO] Using cached embeddings for tab 1749297215859
+2025-06-07 17:23:42,836 [INFO] Using cached embeddings for tab 1749297215859
+2025-06-07 17:23:53,872 [INFO] Search found 1 results for query: 'google...'
+2025-06-07 17:25:08,507 [INFO] Received signal 2, shutting down...
+2025-06-07 17:25:08,508 [INFO] Shutting down...

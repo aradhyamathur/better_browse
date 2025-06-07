@@ -1,0 +1,32 @@
+2025-06-07 18:03:58,403 [INFO] Starting single-process CUDA backend
+2025-06-07 18:03:58,403 [INFO] Device: cuda
+2025-06-07 18:03:58,403 [INFO] Batch size: 64
+2025-06-07 18:03:58,403 [INFO] Max queue size: 1000
+2025-06-07 18:03:58,405 [INFO] Starting request processing loop
+2025-06-07 18:03:58,406 [INFO] Backend ready for processing
+2025-06-07 18:03:58,415 [INFO] Processing tab 1749299631044: 1 chunks
+2025-06-07 18:03:58,422 [INFO] Processed tab 1749299631044 in 0.01s: 3 embeddings
+2025-06-07 18:03:58,423 [INFO] Using cached embeddings for tab 1749299631044
+2025-06-07 18:03:58,423 [INFO] Using cached embeddings for tab 1749299631044
+2025-06-07 18:04:14,179 [INFO] Found match in tab 1749299631044:
+2025-06-07 18:04:14,180 [INFO]   Title: Google
+2025-06-07 18:04:14,180 [INFO]   URL: https://www.google.com/
+2025-06-07 18:04:14,180 [INFO]   Similarity: 1.0000
+2025-06-07 18:04:14,180 [INFO]   Content Preview: About
+Store
+GmailImages
+Sign in
+ 
+Google offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ
+India
+Advertising
+Business
+How Search works
+Privacy
+Terms
+Settings
+2025-06-07 18:04:14,180 [INFO]   Indexed: 2025-06-07 18:03:58
+2025-06-07 18:04:14,180 [INFO]   From Cache: True
+2025-06-07 18:04:14,180 [INFO]   --------------------------------------------------
+2025-06-07 18:04:14,180 [INFO] Search found 1 results for query: 'google...'
+2025-06-07 18:05:24,972 [INFO] Received signal 2, shutting down...

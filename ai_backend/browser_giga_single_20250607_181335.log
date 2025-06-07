@@ -1,0 +1,12 @@
+2025-06-07 18:13:35,210 [INFO] Starting single-process CUDA backend
+2025-06-07 18:13:35,210 [INFO] Device: cuda
+2025-06-07 18:13:35,210 [INFO] Batch size: 64
+2025-06-07 18:13:35,210 [INFO] Max queue size: 1000
+2025-06-07 18:13:35,210 [INFO] Starting request processing loop
+2025-06-07 18:13:35,211 [INFO] Backend ready for processing
+2025-06-07 18:13:35,220 [INFO] Processing tab 1749300209325: 1 chunks
+2025-06-07 18:13:35,227 [INFO] Processed tab 1749300209325 in 0.01s: 3 embeddings
+2025-06-07 18:13:35,227 [INFO] Using cached embeddings for tab 1749300209325
+2025-06-07 18:13:35,228 [INFO] Using cached embeddings for tab 1749300209325
+2025-06-07 18:14:00,632 [INFO] Received signal 2, shutting down...
+2025-06-07 18:14:00,719 [ERROR] Error in search: 

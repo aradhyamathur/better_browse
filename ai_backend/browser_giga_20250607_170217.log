@@ -1,0 +1,264 @@
+2025-06-07 17:02:17,014 [INFO] [MainThread] Starting BrowserGIGA backend
+File: app.py:696
+Function: <module>
+----------------------------------------
+2025-06-07 17:02:17,014 [INFO] [MainThread] Device: cuda
+File: app.py:697
+Function: <module>
+----------------------------------------
+2025-06-07 17:02:17,014 [INFO] [MainThread] Max workers: 8
+File: app.py:698
+Function: <module>
+----------------------------------------
+2025-06-07 17:02:17,014 [INFO] [MainThread] Batch size: 32
+File: app.py:699
+Function: <module>
+----------------------------------------
+2025-06-07 17:02:17,014 [INFO] [MainThread] Chunk size: 1024
+File: app.py:700
+Function: <module>
+----------------------------------------
+2025-06-07 17:02:17,014 [INFO] [MainThread] Started stdin reader thread
+File: app.py:705
+Function: <module>
+----------------------------------------
+2025-06-07 17:02:17,014 [INFO] [Thread-2] Received message: {"type":"update_tab","browser_id":"browser_1749295931343_dv4heciwd","tab_id":"1749295931344","title":"Google","url":"https://www.google.com/","content":"About\nStore\nGmailImages\nSign in\n \nGoogle Gemini, \nhelp me with some ideas to reuse my old chopping board\nGoogle offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ\nIndia\nAdvertising\nBusiness\nHow Search works\nPrivacy\nTerms\nSettings"}
+File: app.py:543
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,015 [INFO] [Thread-2] Auto-creating browser instance: browser_1749295931343_dv4heciwd
+File: app.py:549
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,015 [INFO] [MainThread] Started periodic cleanup thread
+File: app.py:710
+Function: <module>
+----------------------------------------
+2025-06-07 17:02:17,015 [INFO] [Thread-2] Queuing tab update for browser browser_1749295931343_dv4heciwd, tab 1749295931344
+File: app.py:586
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,015 [DEBUG] [Thread-2] URL: https://www.google.com/
+File: app.py:587
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,015 [DEBUG] [Thread-2] Title: Google
+File: app.py:588
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,015 [DEBUG] [Thread-2] Content length: 250 characters
+File: app.py:589
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,015 [INFO] [ThreadPoolExecutor-1_0] Starting async processing for tab 1749295931344 in browser browser_1749295931343_dv4heciwd
+File: app.py:357
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,015 [INFO] [Thread-2] Received message: {"type":"update_tab","browser_id":"browser_1749295931343_dv4heciwd","tab_id":"1749295931344","title":"Google","url":"https://www.google.com/","content":"About\nStore\nGmailImages\nSign in\n \nGoogle Gemini, \nhelp me with some ideas to reuse my old chopping board\nGoogle offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ\nIndia\nAdvertising\nBusiness\nHow Search works\nPrivacy\nTerms\nSettings"}
+File: app.py:543
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,016 [DEBUG] [ThreadPoolExecutor-1_0] URL: https://www.google.com/
+File: app.py:358
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,016 [INFO] [Thread-2] Queuing tab update for browser browser_1749295931343_dv4heciwd, tab 1749295931344
+File: app.py:586
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,016 [DEBUG] [ThreadPoolExecutor-1_0] Title: Google
+File: app.py:359
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,016 [DEBUG] [Thread-2] URL: https://www.google.com/
+File: app.py:587
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,016 [DEBUG] [ThreadPoolExecutor-1_0] Content length: 250 characters
+File: app.py:360
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,016 [DEBUG] [Thread-2] Title: Google
+File: app.py:588
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,016 [INFO] [ThreadPoolExecutor-1_0] Created 1 chunks for tab 1749295931344
+File: app.py:382
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,016 [DEBUG] [Thread-2] Content length: 250 characters
+File: app.py:589
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,016 [DEBUG] [ThreadPoolExecutor-1_0] Average chunk size: 247 characters
+File: app.py:383
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,017 [INFO] [ThreadPoolExecutor-1_1] Starting async processing for tab 1749295931344 in browser browser_1749295931343_dv4heciwd
+File: app.py:357
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,017 [DEBUG] [ThreadPoolExecutor-1_0] Processing batch 1 with 3 texts
+File: app.py:188
+Function: get_embeddings_batch
+----------------------------------------
+2025-06-07 17:02:17,017 [INFO] [Thread-2] Received message: {"type":"update_tab","browser_id":"browser_1749295931343_dv4heciwd","tab_id":"1749295931344","title":"Google","url":"https://www.google.com/","content":"About\nStore\nGmailImages\nSign in\n \nGoogle Gemini, \nhelp me with some ideas to reuse my old chopping board\nGoogle offered in: हिन्दी বাংলা తెలుగు मराठी தமிழ் ગુજરાતી ಕನ್ನಡ മലയാളം ਪੰਜਾਬੀ\nIndia\nAdvertising\nBusiness\nHow Search works\nPrivacy\nTerms\nSettings"}
+File: app.py:543
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,017 [DEBUG] [ThreadPoolExecutor-1_1] URL: https://www.google.com/
+File: app.py:358
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,020 [INFO] [Thread-2] Queuing tab update for browser browser_1749295931343_dv4heciwd, tab 1749295931344
+File: app.py:586
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,020 [DEBUG] [ThreadPoolExecutor-1_1] Title: Google
+File: app.py:359
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,021 [DEBUG] [Thread-2] URL: https://www.google.com/
+File: app.py:587
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,021 [DEBUG] [ThreadPoolExecutor-1_1] Content length: 250 characters
+File: app.py:360
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,021 [DEBUG] [Thread-2] Title: Google
+File: app.py:588
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,021 [INFO] [ThreadPoolExecutor-1_1] Created 1 chunks for tab 1749295931344
+File: app.py:382
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,021 [DEBUG] [Thread-2] Content length: 250 characters
+File: app.py:589
+Function: process_message
+----------------------------------------
+2025-06-07 17:02:17,021 [DEBUG] [ThreadPoolExecutor-1_1] Average chunk size: 247 characters
+File: app.py:383
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,021 [INFO] [ThreadPoolExecutor-1_2] Starting async processing for tab 1749295931344 in browser browser_1749295931343_dv4heciwd
+File: app.py:357
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,021 [DEBUG] [ThreadPoolExecutor-1_1] Processing batch 1 with 3 texts
+File: app.py:188
+Function: get_embeddings_batch
+----------------------------------------
+2025-06-07 17:02:17,022 [DEBUG] [ThreadPoolExecutor-1_2] URL: https://www.google.com/
+File: app.py:358
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,023 [DEBUG] [ThreadPoolExecutor-1_2] Title: Google
+File: app.py:359
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,024 [DEBUG] [ThreadPoolExecutor-1_2] Content length: 250 characters
+File: app.py:360
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,024 [INFO] [ThreadPoolExecutor-1_2] Created 1 chunks for tab 1749295931344
+File: app.py:382
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,024 [DEBUG] [ThreadPoolExecutor-1_2] Average chunk size: 247 characters
+File: app.py:383
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,025 [DEBUG] [ThreadPoolExecutor-1_2] Processing batch 1 with 3 texts
+File: app.py:188
+Function: get_embeddings_batch
+----------------------------------------
+2025-06-07 17:02:17,182 [INFO] [ThreadPoolExecutor-1_2] Generated 3 embeddings in 0.16s
+File: app.py:201
+Function: get_embeddings_batch
+----------------------------------------
+2025-06-07 17:02:17,182 [INFO] [ThreadPoolExecutor-1_0] Generated 3 embeddings in 0.17s
+File: app.py:201
+Function: get_embeddings_batch
+----------------------------------------
+2025-06-07 17:02:17,182 [DEBUG] [ThreadPoolExecutor-1_2] Embedding shape: (3, 384)
+File: app.py:202
+Function: get_embeddings_batch
+----------------------------------------
+2025-06-07 17:02:17,182 [INFO] [ThreadPoolExecutor-1_1] Generated 3 embeddings in 0.16s
+File: app.py:201
+Function: get_embeddings_batch
+----------------------------------------
+2025-06-07 17:02:17,182 [DEBUG] [ThreadPoolExecutor-1_0] Embedding shape: (3, 384)
+File: app.py:202
+Function: get_embeddings_batch
+----------------------------------------
+2025-06-07 17:02:17,183 [DEBUG] [ThreadPoolExecutor-1_1] Embedding shape: (3, 384)
+File: app.py:202
+Function: get_embeddings_batch
+----------------------------------------
+2025-06-07 17:02:17,183 [DEBUG] [ThreadPoolExecutor-1_2] GPU Memory - Allocated: 0.12GB, Reserved: 0.14GB
+File: app.py:121
+Function: get_memory_usage
+----------------------------------------
+2025-06-07 17:02:17,184 [DEBUG] [ThreadPoolExecutor-1_2] RAM Usage: 0.96GB
+File: app.py:124
+Function: get_memory_usage
+----------------------------------------
+2025-06-07 17:02:17,184 [INFO] [ThreadPoolExecutor-1_2] Completed processing for tab 1749295931344
+File: app.py:418
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,184 [INFO] [ThreadPoolExecutor-1_2] Generated 3 embeddings in 0.16s
+File: app.py:419
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,184 [INFO] [ThreadPoolExecutor-1_2] Memory usage: RAM 0.96GB, GPU 0.12GB
+File: app.py:420
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,184 [DEBUG] [ThreadPoolExecutor-1_0] GPU Memory - Allocated: 0.12GB, Reserved: 0.14GB
+File: app.py:121
+Function: get_memory_usage
+----------------------------------------
+2025-06-07 17:02:17,184 [DEBUG] [ThreadPoolExecutor-1_0] RAM Usage: 0.96GB
+File: app.py:124
+Function: get_memory_usage
+----------------------------------------
+2025-06-07 17:02:17,184 [INFO] [ThreadPoolExecutor-1_0] Completed processing for tab 1749295931344
+File: app.py:418
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,184 [INFO] [ThreadPoolExecutor-1_0] Generated 3 embeddings in 0.17s
+File: app.py:419
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,185 [INFO] [ThreadPoolExecutor-1_0] Memory usage: RAM 0.96GB, GPU 0.12GB
+File: app.py:420
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,185 [DEBUG] [ThreadPoolExecutor-1_1] GPU Memory - Allocated: 0.12GB, Reserved: 0.14GB
+File: app.py:121
+Function: get_memory_usage
+----------------------------------------
+2025-06-07 17:02:17,185 [DEBUG] [ThreadPoolExecutor-1_1] RAM Usage: 0.96GB
+File: app.py:124
+Function: get_memory_usage
+----------------------------------------
+2025-06-07 17:02:17,185 [INFO] [ThreadPoolExecutor-1_1] Completed processing for tab 1749295931344
+File: app.py:418
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,185 [INFO] [ThreadPoolExecutor-1_1] Generated 3 embeddings in 0.17s
+File: app.py:419
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:17,185 [INFO] [ThreadPoolExecutor-1_1] Memory usage: RAM 0.96GB, GPU 0.12GB
+File: app.py:420
+Function: process_tab_content_async
+----------------------------------------
+2025-06-07 17:02:28,947 [INFO] [MainThread] Shutting down...
+File: app.py:717
+Function: <module>
+----------------------------------------
