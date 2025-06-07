@@ -1,4 +1,4 @@
-# AI-Powered Browser
+# Better Browser
 
 A modern web browser built with Electron.js and Python, featuring AI-powered tab management and search capabilities. This browser can efficiently handle 200+ tabs in a single session using semantic search and smart tab organization.
 
@@ -6,10 +6,9 @@ A modern web browser built with Electron.js and Python, featuring AI-powered tab
 
 - Modern, clean user interface
 - AI-powered tab search and management
-- Support for 200+ tabs in a single session
 - Semantic search across all open tabs
-- Smart tab organization
-- Real-time tab updates and synchronization
+- Smart tab organization (next todo)
+<!-- - Real-time tab updates and synchronization -->
 
 ## Project Structure
 
@@ -34,7 +33,7 @@ ai-browser/
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd ai-browser
+cd better-browse
 ```
 
 2. Install Node.js dependencies:

@@ -639,7 +639,8 @@
         </div>
         <button id="settings-btn" title="Open settings">⚙️</button>
         <button id="cookie-manager-btn" title="Manage cookies for this tab" style="margin-left:8px;">🍪</button>
-        <button id="history-btn" title="View browsing history" style="margin-left:8px;">📜</button>
+        <button id="history-btn" title="View browsing history" style="margin-left:8px;">��</button>
+        <button id="organize-btn" title="Organize tabs by topic" style="margin-left:8px;">🗂️ Organize</button>
         <span id="instance-indicator">Instance: Loading...</span>
     </div>
     <div id="tabs-container"></div>
@@ -1667,6 +1668,24 @@
                             console.log('[Backend Stats]', data);
                         }
 
+                        if (data.type === 'tabs_organized' && data.browser_id === BROWSER_ID) {
+                            // Reorder tabs in the DOM and update labels with topic names
+                            const tabOrder = data.tab_order;
+                            const topics = data.topics;
+                            const tabsContainer = document.getElementById('tabs-container');
+                            tabOrder.forEach(tabId => {
+                                const tabObj = tabs.get(tabId);
+                                if (tabObj) {
+                                    // Update tab label to include topic
+                                    const label = tabObj.tab.querySelector('.tab-label');
+                                    if (label && topics[tabId]) {
+                                        label.textContent = label.textContent.replace(/\s*\[.*\]$/, '') + ` [${topics[tabId]}]`;
+                                    }
+                                    tabsContainer.appendChild(tabObj.tab);
+                                }
+                            });
+                        }
+
                     } catch (err) {
                         console.error('Error handling backend message:', err);
                     }
@@ -1904,6 +1923,15 @@
             window.addEventListener('blur', () => {
                 tooltip.style.opacity = '0';
             });
+
+            // Organize tabs by topic
+            document.getElementById('organize-btn').onclick = () => {
+                if (typeof ipcRenderer !== 'undefined') {
+                    ipcRenderer.send('organize-tabs', {
+                        browser_id: BROWSER_ID
+                    });
+                }
+            };
 
         } catch (err) {
             console.error('Fatal error in main script:', err);
