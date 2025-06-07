@@ -468,6 +468,11 @@
             <div id="search-results"></div>
         </div>
     </div>
+
+    <!-- Keyboard shortcuts hint -->
+    <div id="keyboard-hint" class="keyboard-hint">
+        💡 <strong>Tip:</strong> Right-click links for options, or Ctrl+Click to open in new tab!
+    </div>
     <div id="settings-panel">
         <div class="settings-header">
             <div class="settings-title">Settings</div>
@@ -570,7 +575,6 @@
                             el.textContent = tabObj.tab.textContent || tabObj.webview.src;
                             el.onclick = () => {
                                 setActiveTab(result.tab_id);
-                                document.getElementById('search-results').style.display = 'none';
                                 sidebar.classList.remove('open');
                                 console.log(`[Sidebar] Clicked sidebar tab for tabId: ${result.tab_id}`);
                             };
@@ -582,76 +586,6 @@
 
             // Initialize the first tab
             createNewTab();
-
-            // Custom context menu for links in webviews
-            let contextMenu = null;
-
-            function createContextMenu() {
-                if (contextMenu) return contextMenu;
-                contextMenu = document.createElement('div');
-                contextMenu.style.position = 'fixed';
-                contextMenu.style.zIndex = 99999;
-                contextMenu.style.background = '#222c37';
-                contextMenu.style.color = '#fff';
-                contextMenu.style.borderRadius = '6px';
-                contextMenu.style.boxShadow = '0 2px 8px rgba(0,0,0,0.18)';
-                contextMenu.style.padding = '6px 0';
-                contextMenu.style.display = 'none';
-                contextMenu.style.minWidth = '180px';
-                contextMenu.innerHTML = `
-                    <div id="open-link-new-tab" style="padding: 8px 18px; cursor: pointer;">Open link in new tab</div>
-                `;
-                document.body.appendChild(contextMenu);
-                return contextMenu;
-            }
-
-            function showContextMenu(x, y, linkUrl) {
-                const menu = createContextMenu();
-                menu.style.left = x + 'px';
-                menu.style.top = y + 'px';
-                menu.style.display = 'block';
-                // Set up click handler
-                const openLink = menu.querySelector('#open-link-new-tab');
-                openLink.onclick = () => {
-                    createNewTab(linkUrl);
-                    menu.style.display = 'none';
-                };
-            }
-
-            function hideContextMenu() {
-                if (contextMenu) contextMenu.style.display = 'none';
-            }
-
-            // Hide menu on click elsewhere or escape
-            window.addEventListener('click', hideContextMenu);
-            window.addEventListener('contextmenu', (e) => {
-                if (!contextMenu || !contextMenu.contains(e.target)) hideContextMenu();
-            });
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') hideContextMenu();
-            });
-
-            // Attach contextmenu event to all webviews
-            function attachWebviewContextMenu(webview) {
-                webview.addEventListener('contextmenu', async (event) => {
-                    // Get the link at the mouse position
-                    const { x, y } = event;
-                    // Use executeJavaScript to get the href under the mouse
-                    const linkUrl = await webview.executeJavaScript(`
-                        (function() {
-                            let el = document.elementFromPoint(${event.offsetX}, ${event.offsetY});
-                            while (el && !el.href) el = el.parentElement;
-                            return el && el.href ? el.href : null;
-                        })();
-                    `);
-                    if (linkUrl) {
-                        event.preventDefault();
-                        showContextMenu(event.clientX, event.clientY, linkUrl);
-                    } else {
-                        hideContextMenu();
-                    }
-                });
-            }
 
             function createNewTab(url = 'https://www.google.com') {
                 const tabId = Date.now().toString();
@@ -676,9 +610,6 @@
                 setActiveTab(tabId);
                 updateSidebarTabs();
                 console.log(`[Tab] Created tab ${tabId} with URL: ${url}`);
-
-                // Attach custom context menu to this webview
-                attachWebviewContextMenu(webview);
 
                 async function updateTabWithContent() {
                     webview.executeJavaScript(`document.title`).then(async title => {
@@ -867,7 +798,7 @@
                         }
 
                         // Combine metadata and content
-                        let finalText = documentInfo + fullText;
+                        const finalText = documentInfo + fullText;
 
                         // Additional processing for remaining pages (just count them)
                         if (numPages > maxPages) {
@@ -928,13 +859,12 @@
             }
 
             function setActiveTab(tabId) {
-                // Always hide the search results panel when switching tabs
-                document.getElementById('search-results').style.display = 'none';
                 if (activeTab) {
                     const prevTab = tabs.get(activeTab);
                     prevTab.tab.classList.remove('active');
                     prevTab.webview.classList.remove('active');
                 }
+
                 const currentTab = tabs.get(tabId);
                 currentTab.tab.classList.add('active');
                 currentTab.webview.classList.add('active');
@@ -1148,7 +1078,6 @@
                                 `;
                                     resultItem.onclick = () => {
                                         setActiveTab(result.tab_id);
-                                        document.getElementById('search-results').style.display = 'none';
                                         if (autoCloseSidebar) {
                                             sidebar.classList.remove('open');
                                         }
@@ -1224,49 +1153,6 @@
                 autoCloseSidebar = e.target.checked;
                 console.log(`[Settings] Auto-close sidebar set to: ${autoCloseSidebar}`);
             };
-
-            // New IPC listeners
-            if (typeof ipcRenderer !== 'undefined') {
-                ipcRenderer.on('tab-indexing-started', (event, data) => {
-                    // Show taskbar with indexing message
-                    const taskbar = document.getElementById('taskbar');
-                    const progressBarInner = document.getElementById('progress-bar-inner');
-                    taskbar.style.display = 'flex';
-                    taskbar.style.opacity = '1';
-                    // Set message
-                    let tabTitle = data && data.title ? data.title : 'Tab';
-                    taskbar.querySelector('span').textContent = `Indexing tab: ${tabTitle}...`;
-                    progressBarInner.style.width = '80%';
-                });
-
-                ipcRenderer.on('tab-indexing-ended', (event, data) => {
-                    // Hide taskbar
-                    const taskbar = document.getElementById('taskbar');
-                    taskbar.style.opacity = '0';
-                    setTimeout(() => {
-                        taskbar.style.display = 'none';
-                    }, 600);
-                });
-
-                // Show taskbar when tab search starts
-                ipcRenderer.on('tab-search-started', () => {
-                    const taskbar = document.getElementById('taskbar');
-                    const progressBarInner = document.getElementById('progress-bar-inner');
-                    taskbar.style.display = 'flex';
-                    taskbar.style.opacity = '1';
-                    taskbar.querySelector('span').textContent = 'Searching tabs...';
-                    progressBarInner.style.width = '80%';
-                });
-
-                // Hide taskbar when tab search ends
-                ipcRenderer.on('tab-search-ended', () => {
-                    const taskbar = document.getElementById('taskbar');
-                    taskbar.style.opacity = '0';
-                    setTimeout(() => {
-                        taskbar.style.display = 'none';
-                    }, 600);
-                });
-            }
         } catch (err) {
             console.error('Fatal error in main script:', err);
             alert('A fatal error occurred in the browser UI. Check the DevTools console for details.');
