@@ -65,7 +65,9 @@ def search_tabs(query, threshold=DEFAULT_SIMILARITY_THRESHOLD, top_k=5):
     for tab_id, sim in similarities.items():
         tab_info = tabs.get(tab_id, {})
         title = tab_info.get('title', '')
-        print(f"[Backend] Tab ID: {tab_id} | Title: {title} | Similarity: {sim:.4f}")
+        url = tab_info.get('url', '')
+        is_pdf = url.lower().endswith('.pdf')
+        print(f"[Backend] Tab ID: {tab_id} | Title: {title} | URL: {url} | Is PDF: {is_pdf} | Similarity: {sim:.4f}")
     
     # Sort by similarity and return top k results
     sorted_tabs = sorted(similarities.items(), key=lambda x: x[1], reverse=True)[:top_k]

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>AI Browser</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -135,7 +137,7 @@
             left: 0;
             right: 0;
             background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: none;
             z-index: 1000;
             max-height: 300px;
@@ -175,13 +177,16 @@
             0% {
                 box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.9), 0 0 0 0 rgba(52, 152, 219, 0.5);
             }
+
             50% {
                 box-shadow: 0 0 16px 8px rgba(52, 152, 219, 0.7), 0 0 32px 16px rgba(52, 152, 219, 0.3);
             }
+
             100% {
                 box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
             }
         }
+
         .radiate {
             animation: radiate 1.2s ease-in-out 2;
             z-index: 10;
@@ -202,33 +207,38 @@
             justify-content: center;
             height: 32px;
         }
+
         #sidebar {
             width: 0;
             min-width: 0;
             max-width: 260px;
             background: #222c37;
             color: white;
-            box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
             overflow: hidden;
             transition: width 0.2s;
             z-index: 20;
         }
+
         #sidebar.open {
             width: 260px;
             min-width: 260px;
         }
+
         #sidebar-header {
             padding: 16px;
             font-weight: bold;
             font-size: 18px;
             border-bottom: 1px solid #34495e;
         }
+
         #sidebar-tabs {
             flex: 1;
             overflow-y: auto;
         }
+
         .sidebar-tab {
             padding: 12px 18px;
             border-bottom: 1px solid #34495e;
@@ -237,6 +247,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         .sidebar-tab.active {
             background: #3498db;
         }
@@ -252,10 +263,11 @@
             align-items: center;
             justify-content: center;
             z-index: 10000;
-            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
             opacity: 1;
             transition: opacity 0.6s;
         }
+
         #progress-bar {
             width: 60%;
             height: 8px;
@@ -264,6 +276,7 @@
             overflow: hidden;
             position: relative;
         }
+
         #progress-bar-inner {
             width: 0%;
             height: 100%;
@@ -272,11 +285,21 @@
             transition: width 0.4s;
             animation: progress-anim 1.2s infinite linear;
         }
+
         @keyframes progress-anim {
-            0% { width: 0%; }
-            50% { width: 80%; }
-            100% { width: 0%; }
+            0% {
+                width: 0%;
+            }
+
+            50% {
+                width: 80%;
+            }
+
+            100% {
+                width: 0%;
+            }
         }
+
         #sidebar-minimize {
             position: absolute;
             top: 8px;
@@ -298,25 +321,29 @@
             background: #2c3e50;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             display: none;
             color: white;
             min-width: 300px;
         }
+
         #settings-panel.visible {
             display: block;
         }
+
         .settings-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
+
         .settings-title {
             font-size: 18px;
             font-weight: bold;
         }
+
         .settings-close {
             background: none;
             border: none;
@@ -324,13 +351,16 @@
             font-size: 20px;
             cursor: pointer;
         }
+
         .settings-group {
             margin-bottom: 15px;
         }
+
         .settings-label {
             display: block;
             margin-bottom: 5px;
         }
+
         .settings-input {
             width: 100%;
             padding: 8px;
@@ -339,14 +369,17 @@
             background: #34495e;
             color: white;
         }
+
         .settings-checkbox {
             margin-right: 8px;
         }
+
         .settings-checkbox-label {
             display: flex;
             align-items: center;
             cursor: pointer;
         }
+
         #settings-btn {
             background: #3498db;
             color: white;
@@ -357,11 +390,50 @@
             font-size: 16px;
             margin-left: 8px;
         }
+
         #settings-btn:hover {
             background: #2980b9;
         }
+
+        /* PDF loading indicator */
+        .pdf-loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            z-index: 1001;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border: 2px solid #3498db;
+            min-width: 200px;
+        }
+
+        .pdf-loading small {
+            display: block;
+            margin-top: 8px;
+            opacity: 0.8;
+            font-size: 12px;
+        }
+
+        /* PDF status indicators */
+        .pdf-success {
+            color: #27ae60;
+        }
+
+        .pdf-error {
+            color: #e74c3c;
+        }
+
+        .pdf-warning {
+            color: #f39c12;
+        }
     </style>
 </head>
+
 <body>
     <div id="taskbar" style="display:none;">
         <div id="progress-bar">
@@ -374,7 +446,8 @@
         <button id="new-tab">+</button>
         <input type="text" id="url-bar" placeholder="Enter URL">
         <input type="text" id="search-bar" placeholder="Search tabs...">
-        <button id="search-btn" title="Search" style="margin-left:4px; background:#3498db; color:white; border:none; border-radius:4px; padding:7px 10px; cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; height:32px;">🔍</button>
+        <button id="search-btn" title="Search"
+            style="margin-left:4px; background:#3498db; color:white; border:none; border-radius:4px; padding:7px 10px; cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; height:32px;">🔍</button>
         <button id="settings-btn" title="Settings">⚙️</button>
     </div>
     <div id="tabs-container"></div>
@@ -382,9 +455,12 @@
         <div id="sidebar">
             <button id="sidebar-minimize" title="Minimize Sidebar">&laquo;</button>
             <div id="sidebar-header">Tabs</div>
-            <div id="sidebar-search" style="display:flex;align-items:center;padding:8px 12px 8px 12px;gap:4px;background:#222c37;">
-                <input id="sidebar-search-bar" type="text" placeholder="Search tabs..." style="flex:1;padding:6px 8px;border-radius:4px;border:none;font-size:14px;">
-                <button id="sidebar-search-btn" title="Search" style="background:#3498db;color:white;border:none;border-radius:4px;padding:6px 10px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">🔍</button>
+            <div id="sidebar-search"
+                style="display:flex;align-items:center;padding:8px 12px 8px 12px;gap:4px;background:#222c37;">
+                <input id="sidebar-search-bar" type="text" placeholder="Search tabs..."
+                    style="flex:1;padding:6px 8px;border-radius:4px;border:none;font-size:14px;">
+                <button id="sidebar-search-btn" title="Search"
+                    style="background:#3498db;color:white;border:none;border-radius:4px;padding:6px 10px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">🔍</button>
             </div>
             <div id="sidebar-tabs"></div>
         </div>
@@ -399,7 +475,8 @@
         </div>
         <div class="settings-group">
             <label class="settings-label">Similarity Threshold (0.0 - 1.0)</label>
-            <input type="number" id="similarity-threshold" class="settings-input" min="0" max="1" step="0.1" value="0.5">
+            <input type="number" id="similarity-threshold" class="settings-input" min="0" max="1" step="0.1"
+                value="0.5">
         </div>
         <div class="settings-group">
             <label class="settings-label">Chunk Size (characters)</label>
@@ -413,348 +490,788 @@
         </div>
     </div>
 
+    <!-- Load PDF.js from reliable CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
-        const { ipcRenderer } = require('electron');
-        
-        let activeTab = null;
-        const tabs = new Map();
-        let similarityThreshold = 0.5;
-        let chunkSize = 1024;
-        let autoCloseSidebar = false;
-        
-        // Sidebar logic
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sidebarTabs = document.getElementById('sidebar-tabs');
-        const sidebarSearchBar = document.getElementById('sidebar-search-bar');
-        const sidebarSearchBtn = document.getElementById('sidebar-search-btn');
-        let lastSearchResults = [];
-        let lastSearchQuery = '';
-        sidebarToggle.onclick = () => {
-            if (lastSearchQuery.length > 2 && lastSearchResults.length > 0) {
-                sidebar.classList.toggle('open');
-                updateSidebarTabs();
-                console.log('[Sidebar] Toggled sidebar');
-            } else {
-                sidebar.classList.remove('open');
-                console.log('[Sidebar] Sidebar not opened (no search results)');
+        // PDF.js setup with better error handling
+        let pdfJsReady = false;
+
+        function initializePdfJs() {
+            if (typeof window.pdfjsLib !== 'undefined') {
+                window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                pdfJsReady = true;
+                console.log('[PDF.js] Successfully loaded and configured');
+                return true;
             }
-        };
-        function updateSidebarTabs() {
-            sidebarTabs.innerHTML = '';
-            if (lastSearchQuery.length > 2 && lastSearchResults.length > 0) {
-                for (const result of lastSearchResults) {
-                    const tabObj = tabs.get(result.tab_id);
-                    if (tabObj) {
-                        const el = document.createElement('div');
-                        el.className = 'sidebar-tab' + (result.tab_id === activeTab ? ' active' : '');
-                        el.textContent = tabObj.tab.textContent || tabObj.webview.src;
-                        el.onclick = () => {
-                            setActiveTab(result.tab_id);
-                            sidebar.classList.remove('open');
-                            console.log(`[Sidebar] Clicked sidebar tab for tabId: ${result.tab_id}`);
+            return false;
+        }
+
+        // Try to initialize immediately
+        if (!initializePdfJs()) {
+            // If not ready, wait for the script to load
+            window.addEventListener('load', function () {
+                setTimeout(() => {
+                    if (!initializePdfJs()) {
+                        console.error('[PDF.js] Failed to load from CDN');
+                        // Fallback to alternative CDN
+                        const fallbackScript = document.createElement('script');
+                        fallbackScript.src = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js';
+                        fallbackScript.onload = () => {
+                            if (typeof window.pdfjsLib !== 'undefined') {
+                                window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+                                pdfJsReady = true;
+                                console.log('[PDF.js] Fallback CDN loaded successfully');
+                            }
                         };
-                        sidebarTabs.appendChild(el);
+                        fallbackScript.onerror = () => {
+                            console.error('[PDF.js] Both CDN and fallback failed to load');
+                        };
+                        document.head.appendChild(fallbackScript);
                     }
-                }
-            }
+                }, 100);
+            });
         }
-        
-        // Initialize the first tab
-        createNewTab();
-        
-        function createNewTab(url = 'https://www.google.com') {
-            const tabId = Date.now().toString();
-            const tab = document.createElement('div');
-            tab.className = 'tab';
-            tab.dataset.tabId = tabId;
-            
-            // Add click handler for the tab
-            tab.onclick = () => setActiveTab(tabId);
-            
-            const webview = document.createElement('webview');
-            webview.src = url;
-            webview.className = 'webview';
-            
-            const closeButton = document.createElement('div');
-            closeButton.className = 'tab-close';
-            closeButton.textContent = '×';
-            closeButton.onclick = (e) => {
-                e.stopPropagation(); // Prevent tab click when closing
-                closeTab(tabId);
-            };
-            
-            tab.appendChild(closeButton);
-            document.getElementById('tabs-container').appendChild(tab);
-            document.getElementById('webview-container').appendChild(webview);
-            
-            tabs.set(tabId, { tab, webview });
-            setActiveTab(tabId);
-            updateSidebarTabs();
-            console.log(`[Tab] Created tab ${tabId} with URL: ${url}`);
-            
-            // Update tab info and extract content after navigation
-            function updateTabWithContent() {
-                webview.executeJavaScript(`document.title`).then(title => {
-                    webview.executeJavaScript(`document.body ? document.body.innerText : ''`).then(pageText => {
-                        tab.textContent = title;
-                        updateTabInfo(tabId, title, webview.src, pageText);
-                        updateSidebarTabs();
-                        console.log(`[Tab] Updated tab ${tabId} with title: ${title}`);
-                    });
-                });
-            }
-            webview.addEventListener('did-finish-load', updateTabWithContent);
-            webview.addEventListener('page-title-updated', updateTabWithContent);
-        }
-        
-        function setActiveTab(tabId) {
-            if (activeTab) {
-                const prevTab = tabs.get(activeTab);
-                prevTab.tab.classList.remove('active');
-                prevTab.webview.classList.remove('active');
-            }
-            
-            const currentTab = tabs.get(tabId);
-            currentTab.tab.classList.add('active');
-            currentTab.webview.classList.add('active');
-            activeTab = tabId;
-            document.getElementById('url-bar').value = currentTab.webview.src;
-            updateSidebarTabs();
-            console.log(`[Tab] Switched to tab ${tabId}`);
-        }
-        
-        function closeTab(tabId) {
-            const tab = tabs.get(tabId);
-            tab.tab.remove();
-            tab.webview.remove();
-            tabs.delete(tabId);
-            updateSidebarTabs();
-            console.log(`[Tab] Closed tab ${tabId}`);
-            if (activeTab === tabId) {
-                const nextTab = tabs.keys().next().value;
-                if (nextTab) {
-                    setActiveTab(nextTab);
+    </script>
+    <script>
+        try {
+            const { ipcRenderer } = require('electron');
+            let activeTab = null;
+            const tabs = new Map();
+            let similarityThreshold = 0.5;
+            let chunkSize = 1024;
+            let autoCloseSidebar = false;
+
+            // Sidebar logic
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarTabs = document.getElementById('sidebar-tabs');
+            const sidebarSearchBar = document.getElementById('sidebar-search-bar');
+            const sidebarSearchBtn = document.getElementById('sidebar-search-btn');
+            let lastSearchResults = [];
+            let lastSearchQuery = '';
+            sidebarToggle.onclick = () => {
+                if (lastSearchQuery.length > 2 && lastSearchResults.length > 0) {
+                    sidebar.classList.toggle('open');
+                    updateSidebarTabs();
+                    console.log('[Sidebar] Toggled sidebar');
                 } else {
-                    createNewTab();
+                    sidebar.classList.remove('open');
+                    console.log('[Sidebar] Sidebar not opened (no search results)');
                 }
-            }
-        }
-        
-        function updateTabInfo(tabId, title, url, content = '') {
-            ipcRenderer.send('update-tab', {
-                tab_id: tabId,
-                title: title,
-                url: url,
-                content: content
-            });
-            console.log(`[Tab] Sent update for tab ${tabId}`);
-        }
-        
-        // Event Listeners
-        document.getElementById('new-tab').onclick = () => {
-            console.log('[UI] New tab button clicked');
-            createNewTab();
-        };
-        
-        document.getElementById('url-bar').onkeypress = (e) => {
-            if (e.key === 'Enter') {
-                const url = e.target.value;
-                if (activeTab) {
-                    tabs.get(activeTab).webview.src = url;
-                    console.log(`[UI] Navigating active tab ${activeTab} to URL: ${url}`);
-                }
-            }
-        };
-        
-        document.getElementById('search-bar').oninput = (e) => {
-            const query = e.target.value;
-            lastSearchQuery = query;
-            if (query.length <= 2) {
-                document.getElementById('search-results').style.display = 'none';
-                sidebar.classList.remove('open');
-                lastSearchResults = [];
-                updateSidebarTabs();
-                // Remove radiate effect from all tabs
-                for (const { tab } of tabs.values()) {
-                    tab.classList.remove('radiate');
-                }
-                console.log('[Search] Cleared search results and sidebar');
-            }
-        };
-        
-        document.getElementById('search-btn').onclick = () => {
-            const query = document.getElementById('search-bar').value;
-            lastSearchQuery = query;
-            console.log('[Search Button] Main toolbar search button clicked');
-            if (query.length > 2) {
-                ipcRenderer.send('search-tabs', query);
-                console.log(`[Search] Sent search query (button): ${query} with threshold: ${similarityThreshold}`);
-            } else {
-                document.getElementById('search-results').style.display = 'none';
-                sidebar.classList.remove('open');
-                lastSearchResults = [];
-                updateSidebarTabs();
-                // Remove radiate effect from all tabs
-                for (const { tab } of tabs.values()) {
-                    tab.classList.remove('radiate');
-                }
-                console.log('[Search] Cleared search results and sidebar (button)');
-            }
-        };
-        
-        // Sidebar search button logic
-        sidebarSearchBtn.onclick = () => {
-            const query = sidebarSearchBar.value;
-            lastSearchQuery = query;
-            console.log('[Search Button] Sidebar search button clicked');
-            if (query.length > 2) {
-                ipcRenderer.send('search-tabs', query);
-                sidebar.classList.add('open');
-                console.log(`[Sidebar Search] Sent search query: ${query} with threshold: ${similarityThreshold}`);
-            } else {
-                document.getElementById('search-results').style.display = 'none';
-                sidebar.classList.remove('open');
-                lastSearchResults = [];
-                updateSidebarTabs();
-                // Remove radiate effect from all tabs
-                for (const { tab } of tabs.values()) {
-                    tab.classList.remove('radiate');
-                }
-                console.log('[Sidebar Search] Cleared search results and sidebar');
-            }
-        };
-        // Also allow pressing Enter in sidebar search
-        sidebarSearchBar.onkeypress = (e) => {
-            if (e.key === 'Enter') sidebarSearchBtn.onclick();
-        };
-        
-        // Add Enter key search for main search bar
-        document.getElementById('search-bar').onkeypress = (e) => {
-            if (e.key === 'Enter') {
-                document.getElementById('search-btn').onclick();
-            }
-        };
-        
-        // Handle search results and radiate effect
-        ipcRenderer.on('python-message', (event, message) => {
-            const data = JSON.parse(message);
-            if (data.type === 'backend_ready') {
-                backendReady = true;
-                hideTaskbar();
-                console.log('[Backend] Model loaded, hiding taskbar.');
-            }
-            if (!backendReady && (data.type === 'tab_updated' || data.type === 'search_results')) {
-                backendReady = true;
-                hideTaskbar();
-            }
-            if (data.type === 'search_results') {
-                lastSearchResults = data.results;
-                updateSidebarTabs();
-                sidebar.classList.add('open');
-                // Sync sidebar search bar with last query
-                sidebarSearchBar.value = lastSearchQuery;
-                console.log(`[Search] Received search results:`, data.results);
-                const resultsContainer = document.getElementById('search-results');
-                resultsContainer.innerHTML = '';
-                // Remove radiate from all tabs first
-                for (const { tab } of tabs.values()) {
-                    tab.classList.remove('radiate');
-                }
-                // Highlight and radiate matching tabs
-                data.results.forEach(result => {
-                    const tabObj = tabs.get(result.tab_id);
-                    if (tabObj) {
-                        tabObj.tab.classList.add('radiate');
-                        // Optionally, also radiate in sidebar
-                        const sidebarTabEls = sidebarTabs.querySelectorAll('.sidebar-tab');
-                        sidebarTabEls.forEach(el => {
-                            if (el.textContent === tabObj.tab.textContent) {
-                                el.classList.add('radiate');
-                                setTimeout(() => el.classList.remove('radiate'), 2400);
-                            }
-                        });
-                        setTimeout(() => tabObj.tab.classList.remove('radiate'), 2400);
-                    }
-                });
-                // Show search results as before
-                data.results.forEach(result => {
-                    const tab = tabs.get(result.tab_id);
-                    if (tab) {
-                        const resultItem = document.createElement('div');
-                        resultItem.className = 'search-result-item';
-                        resultItem.textContent = tab.tab.textContent;
-                        resultItem.onclick = () => {
-                            setActiveTab(result.tab_id);
-                            if (autoCloseSidebar) {
+            };
+            function updateSidebarTabs() {
+                sidebarTabs.innerHTML = '';
+                if (lastSearchQuery.length > 2 && lastSearchResults.length > 0) {
+                    for (const result of lastSearchResults) {
+                        const tabObj = tabs.get(result.tab_id);
+                        if (tabObj) {
+                            const el = document.createElement('div');
+                            el.className = 'sidebar-tab' + (result.tab_id === activeTab ? ' active' : '');
+                            el.textContent = tabObj.tab.textContent || tabObj.webview.src;
+                            el.onclick = () => {
+                                setActiveTab(result.tab_id);
+                                document.getElementById('search-results').style.display = 'none';
                                 sidebar.classList.remove('open');
-                            }
-                        };
-                        resultsContainer.appendChild(resultItem);
+                                console.log(`[Sidebar] Clicked sidebar tab for tabId: ${result.tab_id}`);
+                            };
+                            sidebarTabs.appendChild(el);
+                        }
+                    }
+                }
+            }
+
+            // Initialize the first tab
+            createNewTab();
+
+            // Custom context menu for links in webviews
+            let contextMenu = null;
+
+            function createContextMenu() {
+                if (contextMenu) return contextMenu;
+                contextMenu = document.createElement('div');
+                contextMenu.style.position = 'fixed';
+                contextMenu.style.zIndex = 99999;
+                contextMenu.style.background = '#222c37';
+                contextMenu.style.color = '#fff';
+                contextMenu.style.borderRadius = '6px';
+                contextMenu.style.boxShadow = '0 2px 8px rgba(0,0,0,0.18)';
+                contextMenu.style.padding = '6px 0';
+                contextMenu.style.display = 'none';
+                contextMenu.style.minWidth = '180px';
+                contextMenu.innerHTML = `
+                    <div id="open-link-new-tab" style="padding: 8px 18px; cursor: pointer;">Open link in new tab</div>
+                `;
+                document.body.appendChild(contextMenu);
+                return contextMenu;
+            }
+
+            function showContextMenu(x, y, linkUrl) {
+                const menu = createContextMenu();
+                menu.style.left = x + 'px';
+                menu.style.top = y + 'px';
+                menu.style.display = 'block';
+                // Set up click handler
+                const openLink = menu.querySelector('#open-link-new-tab');
+                openLink.onclick = () => {
+                    createNewTab(linkUrl);
+                    menu.style.display = 'none';
+                };
+            }
+
+            function hideContextMenu() {
+                if (contextMenu) contextMenu.style.display = 'none';
+            }
+
+            // Hide menu on click elsewhere or escape
+            window.addEventListener('click', hideContextMenu);
+            window.addEventListener('contextmenu', (e) => {
+                if (!contextMenu || !contextMenu.contains(e.target)) hideContextMenu();
+            });
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') hideContextMenu();
+            });
+
+            // Attach contextmenu event to all webviews
+            function attachWebviewContextMenu(webview) {
+                webview.addEventListener('contextmenu', async (event) => {
+                    // Get the link at the mouse position
+                    const { x, y } = event;
+                    // Use executeJavaScript to get the href under the mouse
+                    const linkUrl = await webview.executeJavaScript(`
+                        (function() {
+                            let el = document.elementFromPoint(${event.offsetX}, ${event.offsetY});
+                            while (el && !el.href) el = el.parentElement;
+                            return el && el.href ? el.href : null;
+                        })();
+                    `);
+                    if (linkUrl) {
+                        event.preventDefault();
+                        showContextMenu(event.clientX, event.clientY, linkUrl);
+                    } else {
+                        hideContextMenu();
                     }
                 });
-                resultsContainer.style.display = 'block';
             }
-        });
 
-        // Backend loading progress bar logic
-        let backendReady = false;
-        const taskbar = document.getElementById('taskbar');
-        const progressBarInner = document.getElementById('progress-bar-inner');
-        function showTaskbar() {
-            taskbar.style.display = 'flex';
-            taskbar.style.opacity = '1';
-        }
-        function hideTaskbar() {
-            taskbar.style.opacity = '0';
-            setTimeout(() => {
-                taskbar.style.display = 'none';
-            }, 600);
-        }
-        // Show progress bar on load
-        showTaskbar();
+            function createNewTab(url = 'https://www.google.com') {
+                const tabId = Date.now().toString();
+                const tab = document.createElement('div');
+                tab.className = 'tab';
+                tab.dataset.tabId = tabId;
+                tab.onclick = () => setActiveTab(tabId);
+                const webview = document.createElement('webview');
+                webview.src = url;
+                webview.className = 'webview';
+                const closeButton = document.createElement('div');
+                closeButton.className = 'tab-close';
+                closeButton.textContent = '×';
+                closeButton.onclick = (e) => {
+                    e.stopPropagation();
+                    closeTab(tabId);
+                };
+                tab.appendChild(closeButton);
+                document.getElementById('tabs-container').appendChild(tab);
+                document.getElementById('webview-container').appendChild(webview);
+                tabs.set(tabId, { tab, webview });
+                setActiveTab(tabId);
+                updateSidebarTabs();
+                console.log(`[Tab] Created tab ${tabId} with URL: ${url}`);
 
-        // Sidebar minimize button logic
-        document.getElementById('sidebar-minimize').onclick = () => {
-            sidebar.classList.remove('open');
-            console.log('[Sidebar] Minimized sidebar');
-        };
+                // Attach custom context menu to this webview
+                attachWebviewContextMenu(webview);
 
-        // Settings panel logic
-        const settingsPanel = document.getElementById('settings-panel');
-        const settingsBtn = document.getElementById('settings-btn');
-        const settingsClose = document.querySelector('.settings-close');
-        const similarityThresholdInput = document.getElementById('similarity-threshold');
-        const chunkSizeInput = document.getElementById('chunk-size');
-        const autoCloseSidebarInput = document.getElementById('auto-close-sidebar');
-        
-        settingsBtn.onclick = () => {
-            settingsPanel.classList.add('visible');
-        };
-        
-        settingsClose.onclick = () => {
-            settingsPanel.classList.remove('visible');
-        };
-        
-        similarityThresholdInput.onchange = (e) => {
-            similarityThreshold = parseFloat(e.target.value);
-            console.log(`[Settings] Updated similarity threshold to: ${similarityThreshold}`);
-        };
-        
-        chunkSizeInput.onchange = (e) => {
-            chunkSize = parseInt(e.target.value);
-            console.log(`[Settings] Updated chunk size to: ${chunkSize}`);
-            // Notify backend of chunk size change
-            ipcRenderer.send('update-settings', {
-                type: 'update_settings',
-                chunk_size: chunkSize
+                async function updateTabWithContent() {
+                    webview.executeJavaScript(`document.title`).then(async title => {
+                        const url = webview.src;
+                        if (url.toLowerCase().endsWith('.pdf')) {
+                            await extractPdfText(tabId, title, url);
+                        } else {
+                            // Regular web page handling
+                            webview.executeJavaScript(`document.body ? document.body.innerText : ''`).then(pageText => {
+                                tab.textContent = title;
+                                updateTabInfo(tabId, title, url, pageText);
+                                updateSidebarTabs();
+                                console.log(`[Tab] Updated tab ${tabId} with title: ${title}`);
+                            }).catch(err => {
+                                console.warn(`[Tab] Failed to extract text from tab ${tabId}:`, err);
+                                tab.textContent = title || url;
+                                updateTabInfo(tabId, title, url, '');
+                                updateSidebarTabs();
+                            });
+                        }
+                    }).catch(err => {
+                        console.warn(`[Tab] Failed to get title for tab ${tabId}:`, err);
+                        tab.textContent = url;
+                        updateTabInfo(tabId, url, url, '');
+                        updateSidebarTabs();
+                    });
+                }
+
+                // Enhanced PDF text extraction function
+                async function extractPdfText(tabId, title, url) {
+                    const tabObj = tabs.get(tabId);
+                    if (!tabObj) return;
+
+                    let loadingDiv = null;
+
+                    try {
+                        // Check if PDF.js is ready
+                        if (!pdfJsReady) {
+                            console.warn('[PDF] PDF.js not ready yet, waiting...');
+                            setTimeout(() => extractPdfText(tabId, title, url), 1000);
+                            return;
+                        }
+
+                        console.log(`[PDF] Starting to process PDF: ${url}`);
+
+                        // Show enhanced loading indicator
+                        loadingDiv = document.createElement('div');
+                        loadingDiv.className = 'pdf-loading';
+                        loadingDiv.innerHTML = '📄 Loading PDF...<br><small>Extracting text content</small>';
+                        document.body.appendChild(loadingDiv);
+
+                        // Try multiple methods to fetch the PDF
+                        let pdfData = null;
+                        let fetchMethod = '';
+
+                        try {
+                            // Method 1: Direct fetch (may fail due to CORS)
+                            const response = await fetch(url, {
+                                mode: 'cors',
+                                credentials: 'omit'
+                            });
+                            if (response.ok) {
+                                pdfData = await response.arrayBuffer();
+                                fetchMethod = 'direct fetch';
+                            }
+                        } catch (corsError) {
+                            console.warn('[PDF] Direct fetch failed (likely CORS), trying webview method');
+
+                            // Method 2: Use webview to fetch (bypass CORS)
+                            try {
+                                const base64Data = await webview.executeJavaScript(`
+                                (async function() {
+                                    try {
+                                        const response = await fetch('${url}');
+                                        const buffer = await response.arrayBuffer();
+                                        const bytes = new Uint8Array(buffer);
+                                        let binary = '';
+                                        for (let i = 0; i < bytes.byteLength; i++) {
+                                            binary += String.fromCharCode(bytes[i]);
+                                        }
+                                        return btoa(binary);
+                                    } catch (e) {
+                                        throw new Error('Webview fetch failed: ' + e.message);
+                                    }
+                                })()
+                            `);
+
+                                if (base64Data) {
+                                    const binaryString = atob(base64Data);
+                                    const bytes = new Uint8Array(binaryString.length);
+                                    for (let i = 0; i < binaryString.length; i++) {
+                                        bytes[i] = binaryString.charCodeAt(i);
+                                    }
+                                    pdfData = bytes.buffer;
+                                    fetchMethod = 'webview bypass';
+                                }
+                            } catch (webviewError) {
+                                console.error('[PDF] Webview fetch also failed:', webviewError);
+                                throw new Error(`Both direct fetch and webview fetch failed. Direct: ${corsError.message}, Webview: ${webviewError.message}`);
+                            }
+                        }
+
+                        if (!pdfData) {
+                            throw new Error('Failed to fetch PDF data using any method');
+                        }
+
+                        console.log(`[PDF] Fetched ${pdfData.byteLength} bytes using ${fetchMethod}`);
+
+                        // Update loading indicator
+                        loadingDiv.innerHTML = '📄 Processing PDF...<br><small>Parsing document structure</small>';
+
+                        const pdf = await window.pdfjsLib.getDocument({
+                            data: pdfData,
+                            verbosity: 0,
+                            useSystemFonts: true,
+                            disableFontFace: false
+                        }).promise;
+
+                        const numPages = pdf.numPages;
+                        console.log(`[PDF] Document loaded: ${numPages} pages`);
+
+                        // Process more pages for better content coverage
+                        const maxPages = Math.min(5, numPages);
+                        let fullText = '';
+                        let documentInfo = '';
+
+                        // Try to get document metadata
+                        try {
+                            const metadata = await pdf.getMetadata();
+                            if (metadata.info) {
+                                documentInfo = `Title: ${metadata.info.Title || 'Unknown'}\n`;
+                                documentInfo += `Author: ${metadata.info.Author || 'Unknown'}\n`;
+                                documentInfo += `Subject: ${metadata.info.Subject || 'N/A'}\n`;
+                                documentInfo += `Pages: ${numPages}\n\n`;
+                            }
+                        } catch (metaError) {
+                            console.warn('[PDF] Could not extract metadata:', metaError);
+                        }
+
+                        // Extract text from pages with better formatting
+                        for (let i = 1; i <= maxPages; i++) {
+                            try {
+                                loadingDiv.innerHTML = `📄 Processing PDF...<br><small>Extracting page ${i} of ${maxPages}</small>`;
+
+                                const page = await pdf.getPage(i);
+                                const content = await page.getTextContent();
+
+                                // Enhanced text extraction with positioning
+                                const textItems = content.items;
+                                let pageText = '';
+                                let lastY = null;
+
+                                for (let j = 0; j < textItems.length; j++) {
+                                    const item = textItems[j];
+                                    if (!item.str.trim()) continue;
+
+                                    // Add line breaks for significant Y position changes
+                                    if (lastY !== null && Math.abs(item.transform[5] - lastY) > 5) {
+                                        pageText += '\n';
+                                    }
+
+                                    // Add space before text if not at line start
+                                    if (pageText.length > 0 && !pageText.endsWith('\n') && !pageText.endsWith(' ')) {
+                                        pageText += ' ';
+                                    }
+
+                                    pageText += item.str;
+                                    lastY = item.transform[5];
+                                }
+
+                                // Clean up the extracted text
+                                pageText = cleanPdfText(pageText);
+
+                                if (pageText.trim()) {
+                                    fullText += `--- Page ${i} ---\n${pageText}\n\n`;
+                                    console.log(`[PDF] Extracted page ${i}: ${pageText.length} characters`);
+                                } else {
+                                    console.warn(`[PDF] Page ${i} appears to be empty or unreadable`);
+                                    fullText += `--- Page ${i} ---\n[Page appears to be empty or contains non-text content]\n\n`;
+                                }
+
+                            } catch (pageError) {
+                                console.warn(`[PDF] Failed to extract page ${i}:`, pageError.message);
+                                fullText += `--- Page ${i} ---\n[Error extracting page: ${pageError.message}]\n\n`;
+                            }
+                        }
+
+                        // Combine metadata and content
+                        let finalText = documentInfo + fullText;
+
+                        // Additional processing for remaining pages (just count them)
+                        if (numPages > maxPages) {
+                            finalText += `\n[Note: This document has ${numPages - maxPages} additional pages that were not processed for performance reasons.]\n`;
+                        }
+
+                        console.log(`[PDF] Total extracted text length: ${finalText.length}`);
+
+                        // Update tab with extracted content
+                        const displayTitle = title || `PDF Document (${numPages} pages)`;
+                        tabObj.tab.textContent = displayTitle;
+                        updateTabInfo(tabId, displayTitle, url, finalText);
+                        updateSidebarTabs();
+
+                        console.log(`[Tab] Successfully updated PDF tab ${tabId} with ${finalText.length} characters`);
+
+                    } catch (err) {
+                        console.error(`[PDF] Failed to process PDF for tab ${tabId}:`, err);
+                        const errorTitle = `${title || 'PDF Document'} (Load Error)`;
+                        const errorContent = `PDF processing failed: ${err.message}\n\nThis could be due to:\n- CORS restrictions\n- Encrypted/protected PDF\n- Corrupted file\n- Network issues\n\nURL: ${url}`;
+
+                        tabObj.tab.textContent = errorTitle;
+                        updateTabInfo(tabId, errorTitle, url, errorContent);
+                        updateSidebarTabs();
+                    } finally {
+                        // Always remove loading indicator
+                        if (loadingDiv && document.body.contains(loadingDiv)) {
+                            document.body.removeChild(loadingDiv);
+                        }
+                    }
+                }
+
+                // Text cleaning function for better PDF text quality
+                function cleanPdfText(text) {
+                    if (!text) return '';
+
+                    return text
+                        // Remove excessive whitespace
+                        .replace(/[ \t]+/g, ' ')
+                        // Remove excessive line breaks (more than 2)
+                        .replace(/\n{3,}/g, '\n\n')
+                        // Remove trailing/leading whitespace from lines
+                        .split('\n').map(line => line.trim()).join('\n')
+                        // Remove empty lines at start/end
+                        .trim()
+                        // Fix common PDF extraction issues
+                        .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between camelCase
+                        .replace(/([.!?])([A-Z])/g, '$1 $2') // Add space after sentence endings
+                        // Remove weird unicode characters that often appear in PDFs
+                        .replace(/[\u00A0\u2000-\u200B\u2028\u2029]/g, ' ')
+                        // Normalize quotes
+                        .replace(/[""]/g, '"')
+                        .replace(/['']/g, "'");
+                }
+
+                webview.addEventListener('did-finish-load', updateTabWithContent);
+                webview.addEventListener('page-title-updated', updateTabWithContent);
+            }
+
+            function setActiveTab(tabId) {
+                // Always hide the search results panel when switching tabs
+                document.getElementById('search-results').style.display = 'none';
+                if (activeTab) {
+                    const prevTab = tabs.get(activeTab);
+                    prevTab.tab.classList.remove('active');
+                    prevTab.webview.classList.remove('active');
+                }
+                const currentTab = tabs.get(tabId);
+                currentTab.tab.classList.add('active');
+                currentTab.webview.classList.add('active');
+                activeTab = tabId;
+                document.getElementById('url-bar').value = currentTab.webview.src;
+                updateSidebarTabs();
+                console.log(`[Tab] Switched to tab ${tabId}`);
+            }
+
+            function closeTab(tabId) {
+                const tab = tabs.get(tabId);
+                tab.tab.remove();
+                tab.webview.remove();
+                tabs.delete(tabId);
+                updateSidebarTabs();
+                console.log(`[Tab] Closed tab ${tabId}`);
+                if (activeTab === tabId) {
+                    const nextTab = tabs.keys().next().value;
+                    if (nextTab) {
+                        setActiveTab(nextTab);
+                    } else {
+                        createNewTab();
+                    }
+                }
+            }
+
+            function updateTabInfo(tabId, title, url, content = '') {
+                if (typeof ipcRenderer !== 'undefined') {
+                    ipcRenderer.send('update-tab', {
+                        tab_id: tabId,
+                        title: title,
+                        url: url,
+                        content: content
+                    });
+                    console.log(`[Tab] Sent update for tab ${tabId}`);
+                }
+            }
+
+            // Event Listeners
+            document.getElementById('new-tab').onclick = () => {
+                console.log('[UI] New tab button clicked');
+                createNewTab();
+            };
+
+            // Add PDF test function for debugging
+            window.testPdfExtraction = async function (url) {
+                console.log(`[DEBUG] Testing PDF extraction for: ${url}`);
+                const testTabId = 'test-' + Date.now();
+                const testTab = { tab: { textContent: '' } };
+                tabs.set(testTabId, testTab);
+
+                try {
+                    await extractPdfText(testTabId, 'Test PDF', url);
+                    console.log('[DEBUG] PDF test completed successfully');
+                } catch (err) {
+                    console.error('[DEBUG] PDF test failed:', err);
+                } finally {
+                    tabs.delete(testTabId);
+                }
+            };
+
+            // Add debug info to console
+            console.log('[PDF.js] Debug info:', {
+                pdfJsLoaded: typeof window.pdfjsLib !== 'undefined',
+                pdfJsReady: pdfJsReady,
+                version: window.pdfjsLib ? window.pdfjsLib.version : 'not loaded'
             });
-        };
-        
-        autoCloseSidebarInput.onchange = (e) => {
-            autoCloseSidebar = e.target.checked;
-            console.log(`[Settings] Auto-close sidebar set to: ${autoCloseSidebar}`);
-        };
+
+            document.getElementById('url-bar').onkeypress = (e) => {
+                if (e.key === 'Enter') {
+                    const url = e.target.value;
+                    if (activeTab) {
+                        tabs.get(activeTab).webview.src = url;
+                        console.log(`[UI] Navigating active tab ${activeTab} to URL: ${url}`);
+                    }
+                }
+            };
+
+            document.getElementById('search-bar').oninput = (e) => {
+                const query = e.target.value;
+                lastSearchQuery = query;
+                if (query.length <= 2) {
+                    document.getElementById('search-results').style.display = 'none';
+                    sidebar.classList.remove('open');
+                    lastSearchResults = [];
+                    updateSidebarTabs();
+                    // Remove radiate effect from all tabs
+                    for (const { tab } of tabs.values()) {
+                        tab.classList.remove('radiate');
+                    }
+                    console.log('[Search] Cleared search results and sidebar');
+                }
+            };
+
+            document.getElementById('search-btn').onclick = () => {
+                const query = document.getElementById('search-bar').value;
+                lastSearchQuery = query;
+                console.log('[Search Button] Main toolbar search button clicked');
+                if (query.length > 2) {
+                    if (typeof ipcRenderer !== 'undefined') {
+                        ipcRenderer.send('search-tabs', { query, threshold: similarityThreshold });
+                        console.log(`[Search] Sent search query (button): ${query} with threshold: ${similarityThreshold}`);
+                    }
+                } else {
+                    document.getElementById('search-results').style.display = 'none';
+                    sidebar.classList.remove('open');
+                    lastSearchResults = [];
+                    updateSidebarTabs();
+                    // Remove radiate effect from all tabs
+                    for (const { tab } of tabs.values()) {
+                        tab.classList.remove('radiate');
+                    }
+                    console.log('[Search] Cleared search results and sidebar (button)');
+                }
+            };
+
+            // Sidebar search button logic
+            sidebarSearchBtn.onclick = () => {
+                const query = sidebarSearchBar.value;
+                lastSearchQuery = query;
+                console.log('[Search Button] Sidebar search button clicked');
+                if (query.length > 2) {
+                    if (typeof ipcRenderer !== 'undefined') {
+                        ipcRenderer.send('search-tabs', { query, threshold: similarityThreshold });
+                        sidebar.classList.add('open');
+                        console.log(`[Sidebar Search] Sent search query: ${query} with threshold: ${similarityThreshold}`);
+                    }
+                } else {
+                    document.getElementById('search-results').style.display = 'none';
+                    sidebar.classList.remove('open');
+                    lastSearchResults = [];
+                    updateSidebarTabs();
+                    // Remove radiate effect from all tabs
+                    for (const { tab } of tabs.values()) {
+                        tab.classList.remove('radiate');
+                    }
+                    console.log('[Sidebar Search] Cleared search results and sidebar');
+                }
+            };
+
+            // Also allow pressing Enter in sidebar search
+            sidebarSearchBar.onkeypress = (e) => {
+                if (e.key === 'Enter') sidebarSearchBtn.onclick();
+            };
+
+            // Add Enter key search for main search bar
+            document.getElementById('search-bar').onkeypress = (e) => {
+                if (e.key === 'Enter') {
+                    document.getElementById('search-btn').onclick();
+                }
+            };
+
+            // Handle search results and radiate effect
+            if (typeof ipcRenderer !== 'undefined') {
+                ipcRenderer.on('python-message', (event, message) => {
+                    try {
+                        // Check if message is already an object (pre-parsed)
+                        const data = typeof message === 'string' ? JSON.parse(message) : message;
+
+                        if (data.type === 'backend_ready') {
+                            backendReady = true;
+                            hideTaskbar();
+                            console.log('[Backend] Model loaded, hiding taskbar.');
+                        }
+                        if (!backendReady && (data.type === 'tab_updated' || data.type === 'search_results')) {
+                            backendReady = true;
+                            hideTaskbar();
+                        }
+                        if (data.type === 'search_results') {
+                            lastSearchResults = data.results;
+                            updateSidebarTabs();
+                            sidebar.classList.add('open');
+                            // Sync sidebar search bar with last query
+                            sidebarSearchBar.value = lastSearchQuery;
+                            console.log(`[Search] Received search results:`, data.results);
+                            const resultsContainer = document.getElementById('search-results');
+                            resultsContainer.innerHTML = '';
+                            // Remove radiate from all tabs first
+                            for (const { tab } of tabs.values()) {
+                                tab.classList.remove('radiate');
+                            }
+                            // Highlight and radiate matching tabs
+                            data.results.forEach(result => {
+                                const tabObj = tabs.get(result.tab_id);
+                                if (tabObj) {
+                                    tabObj.tab.classList.add('radiate');
+                                    // Optionally, also radiate in sidebar
+                                    const sidebarTabEls = sidebarTabs.querySelectorAll('.sidebar-tab');
+                                    sidebarTabEls.forEach(el => {
+                                        if (el.textContent === tabObj.tab.textContent) {
+                                            el.classList.add('radiate');
+                                            setTimeout(() => el.classList.remove('radiate'), 2400);
+                                        }
+                                    });
+                                    setTimeout(() => tabObj.tab.classList.remove('radiate'), 2400);
+                                }
+                            });
+                            // Show search results as before
+                            data.results.forEach(result => {
+                                const tab = tabs.get(result.tab_id);
+                                if (tab) {
+                                    const resultItem = document.createElement('div');
+                                    resultItem.className = 'search-result-item';
+                                    const url = tab.webview.src;
+                                    const isPdf = url.toLowerCase().endsWith('.pdf');
+                                    resultItem.innerHTML = `
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        ${isPdf ? '<span style="color: #e74c3c;">📄</span>' : ''}
+                                        <span>${tab.tab.textContent}</span>
+                                    </div>
+                                `;
+                                    resultItem.onclick = () => {
+                                        setActiveTab(result.tab_id);
+                                        document.getElementById('search-results').style.display = 'none';
+                                        if (autoCloseSidebar) {
+                                            sidebar.classList.remove('open');
+                                        }
+                                    };
+                                    resultsContainer.appendChild(resultItem);
+                                }
+                            });
+                            resultsContainer.style.display = 'block';
+                        }
+                    } catch (err) {
+                        console.error('Error handling search results:', err);
+                    }
+                });
+            }
+
+            // Backend loading progress bar logic
+            let backendReady = false;
+            const taskbar = document.getElementById('taskbar');
+            const progressBarInner = document.getElementById('progress-bar-inner');
+            function showTaskbar() {
+                taskbar.style.display = 'flex';
+                taskbar.style.opacity = '1';
+            }
+            function hideTaskbar() {
+                taskbar.style.opacity = '0';
+                setTimeout(() => {
+                    taskbar.style.display = 'none';
+                }, 600);
+            }
+            // Show progress bar on load
+            showTaskbar();
+
+            // Sidebar minimize button logic
+            document.getElementById('sidebar-minimize').onclick = () => {
+                sidebar.classList.remove('open');
+                console.log('[Sidebar] Minimized sidebar');
+            };
+
+            // Settings panel logic
+            const settingsPanel = document.getElementById('settings-panel');
+            const settingsBtn = document.getElementById('settings-btn');
+            const settingsClose = document.querySelector('.settings-close');
+            const similarityThresholdInput = document.getElementById('similarity-threshold');
+            const chunkSizeInput = document.getElementById('chunk-size');
+            const autoCloseSidebarInput = document.getElementById('auto-close-sidebar');
+
+            settingsBtn.onclick = () => {
+                settingsPanel.classList.add('visible');
+            };
+
+            settingsClose.onclick = () => {
+                settingsPanel.classList.remove('visible');
+            };
+
+            similarityThresholdInput.onchange = (e) => {
+                similarityThreshold = parseFloat(e.target.value);
+                console.log(`[Settings] Updated similarity threshold to: ${similarityThreshold}`);
+            };
+
+            chunkSizeInput.onchange = (e) => {
+                chunkSize = parseInt(e.target.value);
+                console.log(`[Settings] Updated chunk size to: ${chunkSize}`);
+                // Notify backend of chunk size change
+                if (typeof ipcRenderer !== 'undefined') {
+                    ipcRenderer.send('update-settings', {
+                        type: 'update_settings',
+                        chunk_size: chunkSize
+                    });
+                }
+            };
+
+            autoCloseSidebarInput.onchange = (e) => {
+                autoCloseSidebar = e.target.checked;
+                console.log(`[Settings] Auto-close sidebar set to: ${autoCloseSidebar}`);
+            };
+
+            // New IPC listeners
+            if (typeof ipcRenderer !== 'undefined') {
+                ipcRenderer.on('tab-indexing-started', (event, data) => {
+                    // Show taskbar with indexing message
+                    const taskbar = document.getElementById('taskbar');
+                    const progressBarInner = document.getElementById('progress-bar-inner');
+                    taskbar.style.display = 'flex';
+                    taskbar.style.opacity = '1';
+                    // Set message
+                    let tabTitle = data && data.title ? data.title : 'Tab';
+                    taskbar.querySelector('span').textContent = `Indexing tab: ${tabTitle}...`;
+                    progressBarInner.style.width = '80%';
+                });
+
+                ipcRenderer.on('tab-indexing-ended', (event, data) => {
+                    // Hide taskbar
+                    const taskbar = document.getElementById('taskbar');
+                    taskbar.style.opacity = '0';
+                    setTimeout(() => {
+                        taskbar.style.display = 'none';
+                    }, 600);
+                });
+
+                // Show taskbar when tab search starts
+                ipcRenderer.on('tab-search-started', () => {
+                    const taskbar = document.getElementById('taskbar');
+                    const progressBarInner = document.getElementById('progress-bar-inner');
+                    taskbar.style.display = 'flex';
+                    taskbar.style.opacity = '1';
+                    taskbar.querySelector('span').textContent = 'Searching tabs...';
+                    progressBarInner.style.width = '80%';
+                });
+
+                // Hide taskbar when tab search ends
+                ipcRenderer.on('tab-search-ended', () => {
+                    const taskbar = document.getElementById('taskbar');
+                    taskbar.style.opacity = '0';
+                    setTimeout(() => {
+                        taskbar.style.display = 'none';
+                    }, 600);
+                });
+            }
+        } catch (err) {
+            console.error('Fatal error in main script:', err);
+            alert('A fatal error occurred in the browser UI. Check the DevTools console for details.');
+        }
     </script>
 </body>
-</html> 
+
+</html>

@@ -15,7 +15,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      webviewTag: true
+      webviewTag: true,
+      webSecurity: false  // Required for PDF.js to work with local files
     }
   });
 
@@ -80,11 +81,11 @@ ipcMain.on('close-tab', (event, tabId) => {
   mainWindow.webContents.send('remove-tab', tabId);
 });
 
-ipcMain.on('search-tabs', (event, query) => {
+ipcMain.on('search-tabs', (event, data) => {
   pythonProcess.send(JSON.stringify({
     type: 'search',
-    query: query,
-    threshold: 0.5  // Default threshold
+    query: data.query,
+    threshold: data.threshold
   }));
 });
 
@@ -101,4 +102,9 @@ ipcMain.on('update-tab', (event, tabData) => {
 ipcMain.on('update-settings', (event, settings) => {
   console.log('[Main] Forwarding settings update to Python:', settings);
   pythonProcess.send(JSON.stringify(settings));
+});
+
+// Add IPC handler for PDF content
+ipcMain.on('pdf-content', (event, data) => {
+  mainWindow.webContents.send('pdf-content', data);
 }); 
