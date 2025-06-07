@@ -16,3 +16,4 @@ node_modules/*
 *.wim
 pdfjs/*
 build/
+ai_backend/browser_giga_single_*.log

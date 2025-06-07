@@ -625,7 +625,8 @@
             <button id="forward-btn" title="Forward" style="padding: 6px 10px; border-radius: 4px; background: #34495e; color: white; border: none; cursor: pointer; font-size: 16px;">⟶</button>
         </div>
         <button id="settings-btn" title="Settings">⚙️</button>
-        <button id="cookie-manager-btn" title="Manage Cookies" style="margin-left:8px;">🍪</button>
+        <button id="cookie-manager-btn" title="Manage Cookies" style="margin-left:8px;">��</button>
+        <button id="history-btn" title="View History" style="margin-left:8px;">📜</button>
         <span id="instance-indicator">Instance: Loading...</span>
     </div>
     <div id="tabs-container"></div>
@@ -725,6 +726,12 @@
         <div style="font-weight:bold; font-size:18px; margin-bottom:12px;">Cookie Manager</div>
         <div id="cookie-list"></div>
         <button id="close-cookie-modal" style="margin-top:16px;">Close</button>
+    </div>
+
+    <div id="history-modal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; color:#222; border-radius:8px; box-shadow:0 4px 16px #0003; z-index:9999; padding:24px; min-width:500px; max-height:70vh; overflow-y:auto;">
+        <div style="font-weight:bold; font-size:18px; margin-bottom:12px;">Tab History</div>
+        <div id="history-list"></div>
+        <button id="close-history-modal" style="margin-top:16px;">Close</button>
     </div>
 
     <!-- Load PDF.js from reliable CDN -->
@@ -1140,6 +1147,14 @@
                             updateTabInfo(tabId, title, url, pageText);
                             updateSidebarTabs();
                             console.log(`[Tab] Updated tab ${tabId} with title: ${title}`);
+                            // Add to history
+                            if (typeof ipcRenderer !== 'undefined') {
+                                ipcRenderer.send('add-history', {
+                                    url: url,
+                                    title: title,
+                                    timestamp: Date.now()
+                                });
+                            }
                         }
                     } catch (err) {
                         console.warn(`[Tab] Failed to update tab ${tabId}:`, err);
@@ -1796,6 +1811,28 @@
 
             closeCookieModal.onclick = () => {
                 cookieModal.style.display = 'none';
+            };
+
+            // History modal logic
+            const historyBtn = document.getElementById('history-btn');
+            const historyModal = document.getElementById('history-modal');
+            const historyList = document.getElementById('history-list');
+            const closeHistoryModal = document.getElementById('close-history-modal');
+
+            historyBtn.onclick = async () => {
+                const rows = await ipcRenderer.invoke('get-history');
+                historyList.innerHTML = rows.map(row => `
+                    <div style="margin-bottom:8px;">
+                        <strong>${row.title || row.url}</strong><br>
+                        <span style="font-size:12px; color:#888;">${row.url}</span><br>
+                        <span style="font-size:11px; color:#aaa;">${new Date(row.timestamp).toLocaleString()}</span>
+                    </div>
+                `).join('');
+                historyModal.style.display = 'block';
+            };
+
+            closeHistoryModal.onclick = () => {
+                historyModal.style.display = 'none';
             };
 
         } catch (err) {

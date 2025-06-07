@@ -1,9 +1,12 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
+const sqlite3 = require('sqlite3').verbose();
 
 let mainWindow;
 let pythonProcess = null;
+const dbPath = path.join(app.getPath('userData'), 'tab_history.db');
+const db = new sqlite3.Database(dbPath);
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -368,3 +371,28 @@ ipcMain.on('close-browser', (event) => {
 });
 
 console.log('[Main] Electron main process started with enhanced Python backend support');
+
+db.serialize(() => {
+  db.run(`CREATE TABLE IF NOT EXISTS history (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    url TEXT,
+    title TEXT,
+    timestamp INTEGER
+  )`);
+});
+
+ipcMain.on('add-history', (event, entry) => {
+  db.run(
+    `INSERT INTO history (url, title, timestamp) VALUES (?, ?, ?)`,
+    [entry.url, entry.title, entry.timestamp]
+  );
+});
+
+ipcMain.handle('get-history', async () => {
+  return new Promise((resolve, reject) => {
+    db.all(`SELECT * FROM history ORDER BY timestamp DESC LIMIT 500`, (err, rows) => {
+      if (err) reject(err);
+      else resolve(rows);
+    });
+  });
+});
