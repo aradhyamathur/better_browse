@@ -705,7 +705,7 @@
 
     <!-- Keyboard shortcuts hint -->
     <div id="keyboard-hint" class="keyboard-hint">
-        💡 <strong>Tip:</strong> Right-click links for options, or Ctrl+Click to open in new tab!
+        💡 <strong>Tip:</strong> Ctrl+T: New Tab, Ctrl+W: Close Tab, Ctrl+Q: Quit Browser. Right-click links for options, or Ctrl+Click to open in new tab!
     </div>
 
     <div id="settings-panel">
@@ -1932,6 +1932,27 @@
                     });
                 }
             };
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && !e.shiftKey && !e.altKey) {
+                    if (e.key === 't' || e.key === 'T') {
+                        // Ctrl+T: New tab
+                        e.preventDefault();
+                        if (typeof createNewTab === 'function') createNewTab();
+                    } else if (e.key === 'w' || e.key === 'W') {
+                        // Ctrl+W: Close current tab
+                        e.preventDefault();
+                        if (activeTab) closeTab(activeTab);
+                    } else if (e.key === 'q' || e.key === 'Q') {
+                        // Ctrl+Q: Close browser
+                        e.preventDefault();
+                        if (typeof ipcRenderer !== 'undefined') {
+                            ipcRenderer.send('close-browser');
+                        }
+                    }
+                }
+            });
 
         } catch (err) {
             console.error('Fatal error in main script:', err);

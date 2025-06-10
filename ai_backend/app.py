@@ -18,6 +18,8 @@ import datetime
 import signal
 from collections import defaultdict, deque
 import sys
+from sklearn.cluster import KMeans
+from sklearn.feature_extraction.text import TfidfVectorizer
 # makes every `print()` flush automatically on `\n`
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(line_buffering=True)
@@ -518,6 +520,55 @@ def search_tabs(browser_id: str, query: str, threshold: float = DEFAULT_SIMILARI
         logger.error(error_msg)
         return []
 
+def handle_organize_tabs(browser_id):
+    if browser_id not in browser_instances:
+        return
+    browser_data = browser_instances[browser_id]
+    tabs = browser_data.get('tabs', {})
+    tab_embeddings = browser_data.get('tab_embeddings', {})
+    if not tabs or not tab_embeddings:
+        return
+    # Prepare embeddings and tab ids
+    tab_ids = []
+    embeddings = []
+    tab_texts = []
+    for tab_id, emb_list in tab_embeddings.items():
+        if emb_list:
+            # Use the first embedding for clustering (title/url chunk)
+            emb = emb_list[0]
+            embeddings.append(emb)
+            tab_ids.append(tab_id)
+            tab_info = tabs.get(tab_id, {})
+            tab_texts.append(tab_info.get('title', '') + ' ' + tab_info.get('url', ''))
+    if len(embeddings) < 2:
+        return
+    # KMeans clustering
+    n_topics = min(5, len(embeddings))
+    kmeans = KMeans(n_clusters=n_topics, random_state=42, n_init=10)
+    labels = kmeans.fit_predict(embeddings)
+    # Topic names: use most common word in each cluster (from titles/urls)
+    topic_names = {}
+    for topic in range(n_topics):
+        cluster_texts = [tab_texts[i] for i, lbl in enumerate(labels) if lbl == topic]
+        if cluster_texts:
+            vectorizer = TfidfVectorizer(stop_words='english', max_features=1)
+            X = vectorizer.fit_transform(cluster_texts)
+            words = vectorizer.get_feature_names_out()
+            topic_names[topic] = words[0] if len(words) > 0 else f"Topic {topic+1}"
+        else:
+            topic_names[topic] = f"Topic {topic+1}"
+    # Build response
+    topics = {tab_ids[i]: topic_names[labels[i]] for i in range(len(tab_ids))}
+    # Sort tabs by topic, then by original order
+    sorted_tab_ids = [tab_id for _, tab_id in sorted(zip(labels, tab_ids), key=lambda x: (x[0], tab_ids.index(x[1])))]
+    response = {
+        "type": "tabs_organized",
+        "browser_id": browser_id,
+        "tab_order": sorted_tab_ids,
+        "topics": topics
+    }
+    print(json.dumps(response))
+
 def process_requests():
     """Main processing loop - handles requests from queue."""
     print(json.dumps({
@@ -588,6 +639,9 @@ def process_requests():
                         }
                         
                         print(json.dumps(response))
+                        
+                    elif request_type == 'organize_tabs':
+                        handle_organize_tabs(request_data['browser_id'])
                         
                 except Exception as e:
                     error_msg = f"Error processing request: {str(e)}"
