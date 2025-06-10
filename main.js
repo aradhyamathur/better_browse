@@ -2,6 +2,9 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
+const https = require('https');
+const http = require('http');
 
 let mainWindow;
 let pythonProcess = null;
@@ -403,4 +406,24 @@ ipcMain.on('clear-history', (event) => {
 
 ipcMain.on('delete-history-entry', (event, id) => {
   db.run('DELETE FROM history WHERE id = ?', [id]);
+});
+
+ipcMain.handle('select-download-folder', async () => {
+    const result = await dialog.showOpenDialog({ properties: ['openDirectory'] });
+    return result.canceled ? null : result.filePaths[0];
+});
+
+ipcMain.handle('select-download-file', async (event, defaultName) => {
+    const result = await dialog.showSaveDialog({ defaultPath: defaultName });
+    return result.canceled ? null : result.filePath;
+});
+
+ipcMain.on('download-pdf', (event, { url, filename, folder, file }) => {
+    const dest = file || path.join(folder, filename);
+    const proto = url.startsWith('https') ? https : http;
+    const fileStream = fs.createWriteStream(dest);
+    proto.get(url, response => {
+        response.pipe(fileStream);
+        fileStream.on('finish', () => fileStream.close());
+    });
 });
